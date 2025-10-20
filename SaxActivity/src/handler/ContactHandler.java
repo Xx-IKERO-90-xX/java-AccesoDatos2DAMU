@@ -51,9 +51,9 @@ public class ContactHandler extends DefaultHandler {
             
             default:
                 if (currentSection.equals("emails")) {
-                    currentContact.getEmails().put(qName, currentValue.toString());
+                    currentContact.getEmails().add(currentValue.toString());
                 } else if (currentSection.equals("phones")) {
-                    currentContact.getPhones().put(qName, currentValue.toString());
+                    currentContact.getPhones().add(currentValue.toString());
                 }
                 break;
         }

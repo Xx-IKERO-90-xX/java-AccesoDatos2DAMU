@@ -5,9 +5,12 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
 import java.util.List;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
+        List<Contact> contactList = new ArrayList<>();
+
         try {
             File inputFile = new File("contacts.xml");
             SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -16,10 +19,12 @@ public class Main {
             ContactHandler handler = new ContactHandler();
             saxParser.parse(inputFile, handler);
 
-            List<Contact> contactList = handler.getContacts();
+            contactList = handler.getContacts();
             contactList.forEach(System.out::println);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Error en la exportacion de los contactos!!");
+            System.out.println("Vaciando lista de contactos.");
+            contactList.clear();
         }
     }
 }
