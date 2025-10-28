@@ -5,25 +5,28 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 import org.example.connection.Database;
+import org.example.controller.SubjectController;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        String url = "jdbc:postgresql://localhost:5432/VTInstitute";
-        String user = "ikero";
-        String passwd = "ikero9090";
+    static SubjectController subjects = new SubjectController();
 
+    // Funcion that tests addSubject function.
+    public static void testAddSubject() throws SQLException {
+        String name = "MARKUP LANGUAJES";
+        int year = 1;
+
+        subjects.addSubject(name, year);
+    }
+    public static void main(String[] args) throws SQLException {
         Database db = new Database();
 
-        if (db.testConnection(url, user, passwd)) {
+        if (db.testConnection()) {
             System.out.println("Connection Successfull!!");
+            testAddSubject();
         } else {
             System.err.println("Connection Failure!!");
         }
-
-
     }
 }
