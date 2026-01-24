@@ -8,8 +8,13 @@ import java.util.Properties;
 public class Database {
 
     // We create PosgreSQL connection.
-    public Connection openConnection(String url, String user, String passwd) {
+    public Connection openConnection() {
         Connection conn = null;
+
+        String url = "jdbc:postgresql://localhost:5432/VTInstitute";
+        String user = "ikero";
+        String passwd = "ikero9090";
+
         try {
             Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection(url, user, passwd);
@@ -21,8 +26,8 @@ public class Database {
     }
 
     // Fuction that tests the connecion.
-    public boolean testConnection(String url, String user, String passwd) {
-        Connection conn = openConnection(url, user, passwd);
+    public boolean testConnection() {
+        Connection conn = openConnection();
         return conn != null;
     }
 }

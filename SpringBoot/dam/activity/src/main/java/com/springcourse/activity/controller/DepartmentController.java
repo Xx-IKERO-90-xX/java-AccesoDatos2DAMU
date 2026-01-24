@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.http.HttpStatus;
-
 
 import com.springcourse.activity.models.entity.Department;
 import com.springcourse.activity.models.dao.DepartmentDAO;
