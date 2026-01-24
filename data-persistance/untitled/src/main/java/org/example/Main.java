@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
         //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
         // to see how IntelliJ IDEA suggests fixing it.
-        String url = "jdbc:postgresql://localhost:5432/VTInstitute";
+        String url = "jdbc:postgresql://100.116.29.49:5432/vtinstitute";
         String user = "ikero";
         String passwd = "ikero9090";
 
@@ -23,7 +23,5 @@ public class Main {
         } else {
             System.err.println("Connection Failure!!");
         }
-
-
     }
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<employees xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="Employees.xsd">
+
+    <employee employee_code="EMP001" category="A">
+        <name>iker</name>
+        <surname>Rodríguez</surname>
+        <age>22</age>
+        <salary>1800</salary>
+    </employee>
+
+    <employee employee_code="EMP002" category="B">
+        <name>Manu</name>
+        <surname>García</surname>
+        <age>23</age>
+        <salary>1600</salary>
+    </employee>
+
+    <employee employee_code="EMP003" category="B">
+        <name>Asier</name>
+        <surname>López</surname>
+        <age>24</age>
+        <salary>1500</salary>
+    </employee>
+
+    <employee employee_code="EMP004" category="A">
+        <name>Leo</name>
+        <surname>Martínez</surname>
+        <age>25</age>
+        <salary>1700</salary>
+    </employee>
+
+    <employee employee_code="EMP005" category="C">
+        <name>Joselito</name>
+        <surname>Hernández</surname>
+        <age>26</age>
+        <salary>1650</salary>
+    </employee>
+
+</employees>
