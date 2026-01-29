@@ -1,0 +1,28 @@
+<html xmlns:th="http://www.thymeleaf.org" th:replace="base :: content">
+  <section>
+    <div
+      class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100"
+    >
+      <table class="table">
+        <!-- head -->
+        <thead>
+          <tr>
+            <th></th>
+            <th>Nombre</th>
+            <th>Job</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- row 1 -->
+          <tr th:each="employee" : "${employees}">
+            <th th:text="${employee.empno}"></th>
+            <td th:text="${employee.ename}">Cy Ganderton</td>
+            <td th:text="${employee.job}">Quality Control Specialist</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</html>

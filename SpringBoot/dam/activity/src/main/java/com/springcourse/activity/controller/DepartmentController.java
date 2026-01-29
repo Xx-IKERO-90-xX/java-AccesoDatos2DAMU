@@ -10,20 +10,21 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.springcourse.activity.models.entity.Department;
-import com.springcourse.activity.models.dao.DepartmentDAO;
+
+import com.springcourse.activity.service.DepartmentService;
 
 public class DepartmentController {
     @Autowired
-    private DepartmentDAO departmentDAO;
+    private DepartmentService departmentService;
 
     @GetMapping
     public List<Department> findAll() {
-        return (List<Department>) departmentDAO.findAll();
+        return departmentService.findAll();
     }
 
     @GetMapping
     public Department findById(@PathVariable(value = "id") int id) {
-        Optional<Department> department = departmentDAO.findById(id);
+        Optional<Department> department = Optional.ofNullable(departmentService.findById(id));
 
         if (!department.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -33,17 +34,11 @@ public class DepartmentController {
 
     @PostMapping("/save")
     public Department saveDepartment(@Validated @RequestBody Department department) {
-        return departmentDAO.save(department);   
+        return departmentService.saveDepartment(department);   
     }
 
     @PutMapping("/update/{id}")
-    public Department updateDepartment(@PathVariable long id, @Validated @RequestBody Department newDepartment) {
-        Department existingDepartment = departmentDAO.findById((int) id)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Department not found!"));
-
-        existingDepartment.setName(newDepartment.getName());
-        existingDepartment.setLocation(newDepartment.getLocation());
-
-        return departmentDAO.save(existingDepartment);
+    public Department updateDepartment(@PathVariable(value = "id") int id, @Validated @RequestBody Department updatedDepartment) {
+        return departmentService.updateDepartment(updatedDepartment);
     }
 }
