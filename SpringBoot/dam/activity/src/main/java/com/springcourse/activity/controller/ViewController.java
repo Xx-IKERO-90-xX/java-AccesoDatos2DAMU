@@ -16,7 +16,6 @@ public class ViewController {
 
     @Autowired
     private EmployeeService employeeService;
-    
 
     @GetMapping("/")
     public String index() {return "index";}
@@ -26,7 +25,6 @@ public class ViewController {
     {
         List<Employee> employees = employeeService.findAll();
         model.addAttribute("employees", employees);
-        return "empleados";
+        return "employees";
     }
-    
 }

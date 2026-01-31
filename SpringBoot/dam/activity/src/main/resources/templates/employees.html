@@ -1,11 +1,10 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Empleados</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/daisyui@5"
       rel="stylesheet"
@@ -25,8 +24,33 @@
             </ul>
         </div>
     </header>
-    <main th:fragment="content">
-        
+    <main class="container">
+      <section class="my-8 mx-auto">
+        <div
+          class="mx-auto overflow-x-auto rounded-box border border-base-content/5 bg-base-100"
+        >
+          <table class="table">
+            <!-- head -->
+            <thead>
+              <tr>
+                <th></th>
+                <th>Nombre</th>
+                <th>Job</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- row 1 -->
+              <tr th:each="employee : ${employees}">
+                <th th:text="${employee.id}"></th>
+                <td th:text="${employee.ename}"></td>
+                <td th:text="${employee.job}"></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
     </main>
     <footer>
         <div class="footer footer-center p-4 bg-base-300 text-base-content">

@@ -5,8 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.springcourse.activity.models.entity.Employee;
 
-
-
 @Repository
 public interface EmployeeDAO extends CrudRepository<Employee, Integer> {
     

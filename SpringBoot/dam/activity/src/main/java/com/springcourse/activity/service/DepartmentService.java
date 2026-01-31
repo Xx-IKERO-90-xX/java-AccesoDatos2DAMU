@@ -7,8 +7,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.springcourse.activity.models.dao.DepartmentDAO;
 import com.springcourse.activity.models.entity.Department;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class DepartmentService {
+    @Autowired
     private DepartmentDAO departmentDAO;
 
     public List<Department> findAll() {

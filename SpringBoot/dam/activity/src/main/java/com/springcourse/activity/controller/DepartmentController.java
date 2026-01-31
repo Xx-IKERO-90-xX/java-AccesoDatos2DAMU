@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -13,6 +14,8 @@ import com.springcourse.activity.models.entity.Department;
 
 import com.springcourse.activity.service.DepartmentService;
 
+@Controller
+@RequestMapping("/api/departments")
 public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
@@ -22,7 +25,7 @@ public class DepartmentController {
         return departmentService.findAll();
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
     public Department findById(@PathVariable(value = "id") int id) {
         Optional<Department> department = Optional.ofNullable(departmentService.findById(id));
 
