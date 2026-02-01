@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.springcourse.activity.models.entity.Employee;
 import com.springcourse.activity.service.EmployeeService;
@@ -14,7 +16,6 @@ import com.springcourse.activity.models.entity.Department;
 import com.springcourse.activity.service.DepartmentService;
 
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 
 @Controller
 public class ViewController {
@@ -66,4 +67,27 @@ public class ViewController {
         return "redirect:/empleados";
     }
 
+    @PostMapping("/empleados/edit")
+    public String editEmployee(
+        @RequestParam("empno") Integer id,
+        @RequestParam("ename") String name,
+        @RequestParam String job,
+        @RequestParam("department") Integer deptno
+    ) {
+        Employee employee = employeeService.findById(id);
+        if (employee != null) {
+            employee.setEname(name);
+            employee.setJob(job);
+            Department department = departmentService.findById(deptno);
+            employee.setDepartment(department);
+            employeeService.updateEmployee(employee);
+        }
+        return "redirect:/empleados";
+    }
+
+    @PostMapping("/empleados/delete")
+    public String deleteEmployee(@RequestParam("id") Integer id) {
+        employeeService.deleteEmployee(id);
+        return "redirect:/empleados";
+    }
 }

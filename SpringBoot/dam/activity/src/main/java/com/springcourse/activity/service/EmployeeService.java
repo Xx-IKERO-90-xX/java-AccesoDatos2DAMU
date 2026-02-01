@@ -43,4 +43,12 @@ public class EmployeeService {
 
         return employeeDAO.save(existingEmployee);
     }
+
+    public Employee deleteEmployee(int id) {
+        Employee employee = employeeDAO.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found!"));
+        
+        employeeDAO.delete(employee);
+        return employee;
+    }
 }

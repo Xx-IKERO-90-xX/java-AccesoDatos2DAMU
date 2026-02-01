@@ -68,8 +68,11 @@
               <td th:text="${employee.ename}"></td>
               <td th:text="${employee.job}"></td>
               <td th:text="${employee.department.name}"></td>
-              <td>
-                <button class="btn btn-circle btn-info btn-xs">
+              <td class="flex">
+                <button
+                  th:onclick="'edit_employee_modal_' + ${employee.id} + '.showModal()'"
+                  class="btn btn-circle btn-info btn-xs"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -87,20 +90,90 @@
                     />
                   </svg>
                 </button>
-                <a href="#" class="btn btn-error btn-xs btn-circle">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-trash-fill"
-                    viewBox="0 0 16 16"
+                <form th:action="@{/empleados/delete}" method="post" class="ml-2">
+                  <input type="hidden" name="id" th:value="${employee.id}" />
+                  <button
+                    th:href="@{/empleados/delete/{id}(id=${employee.id})}"
+                    class="btn btn-error btn-xs btn-circle"
                   >
-                    <path
-                      d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"
-                    />
-                  </svg>
-                </a>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-trash-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"
+                      />
+                    </svg>
+                  </button>
+                </form>
+
+                <dialog
+                  th:id="'edit_employee_modal_' + ${employee.id}"
+                  class="modal"
+                >
+                  <div class="modal-box">
+                    <form method="dialog">
+                      <button
+                        class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                      >
+                        ✕
+                      </button>
+                    </form>
+                    <h3 class="font-bold text-lg">Añadir Empleado</h3>
+                    <form
+                      th:action="@{/empleados/edit}"
+                      th:object="${employee}"
+                      method="post"
+                    >
+                      <br />
+                      <input
+                        type="hidden"
+                        name="empno"
+                        th:value="${employee.id}"
+                      />
+                      <div>
+                        <label>Nombre</label>
+                        <input
+                          type="text"
+                          th:value="${employee.ename}"
+                          name="ename"
+                          class="input input-success input-sm"
+                          required
+                        />
+                      </div>
+                      <br />
+                      <div>
+                        <label>Puesto</label>
+                        <input
+                          type="text"
+                          th:value="${employee.job}"
+                          name="job"
+                          class="input input-success input-sm"
+                        />
+                      </div>
+                      <br />
+                      <div>
+                        <label>Departamento:</label>
+                        <select name="department">
+                          <option
+                            th:each="dept : ${departments}"
+                            th:value="${dept.id}"
+                            th:selected="${dept.id == employee.department.id}"
+                            th:text="${dept.name}"
+                          ></option>
+                        </select>
+                      </div>
+                      <br /><br />
+                      <button class="btn btn-success font-bold" type="submit">
+                        Guardar
+                      </button>
+                    </form>
+                  </div>
+                </dialog>
               </td>
             </tr>
           </tbody>
@@ -151,7 +224,6 @@
                 ></option>
               </select>
             </div>
-
             <br /><br />
             <button class="btn btn-success font-bold" type="submit">
               Guardar
