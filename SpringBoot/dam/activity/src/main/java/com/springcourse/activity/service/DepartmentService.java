@@ -37,7 +37,7 @@ public class DepartmentService {
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Department not found!"));
         
         currentDepartment.setName(updatedDepartment.getName());
-        currentDepartment.setLocation(updatedDepartment.getLocation());
+        currentDepartment.setLoc(updatedDepartment.getLoc());
 
         return departmentDAO.save(currentDepartment);        
     }

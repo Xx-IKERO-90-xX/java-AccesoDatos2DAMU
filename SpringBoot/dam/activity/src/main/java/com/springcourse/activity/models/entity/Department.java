@@ -7,6 +7,7 @@ import java.util.List;
 @Table(name = "dept", schema = "public")
 public class Department {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "deptno")
     private Integer id;
 
@@ -39,11 +40,11 @@ public class Department {
         this.name = name;
     }
 
-    public String getLocation() {
+    public String getLoc() {
         return loc;
     }
 
-    public void setLocation(String loc) {
+    public void setLoc(String loc) {
         this.loc = loc;
     }
 }

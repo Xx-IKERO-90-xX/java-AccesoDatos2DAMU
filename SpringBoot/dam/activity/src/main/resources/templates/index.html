@@ -1,0 +1,43 @@
+<!doctype html>
+<html class="bg-gray-500" lang="es" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Empleados</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body>
+    <header class="navbar bg-base-100 shadow-sm">
+      <div class="flex-1">
+        <a class="btn btn-ghost text-xl">daisyUI</a>
+      </div>
+      <div class="flex-none">
+        <ul class="menu menu-horizontal px-1">
+          <li><a href="http://localhost:8080">Inicio</a></li>
+          <li><a href="http://localhost:8080/empleados">Empleados</a></li>
+          <li><a href="http://localhost:8080/departamentos">Departamentos</a></li>
+        </ul>
+      </div>
+    </header>
+    <main style="height: 100%;" class="container h-vh mx-auto">
+        <br><br>
+        <div class="stats shadow bg-base-200 w-full mx-auto">
+          <div class="stat place-items-center">
+            <div class="stat-title">Empleados</div>
+            <div class="stat-value" th:text="${totalEmployees}"></div>
+          </div>
+          <div class="stat place-items-center">
+            <div class="stat-title">Departamentos</div>
+            <div class="stat-value" th:text="${totalDepartments}"></div>
+            <div class="stat-desc"></div>
+          </div>
+        </div>
+    </main>
+  </body>
+</html>

@@ -6,13 +6,14 @@ import jakarta.persistence.*;
 public class Employee {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "empno")
     private Integer id;
 
-    @Column(name = "ename", length = 10)
+    @Column(name = "ename", length = 50)
     private String name;
 
-    @Column(name = "job", length = 9)
+    @Column(name = "job", length = 50)
     private String job;
 
     @ManyToOne

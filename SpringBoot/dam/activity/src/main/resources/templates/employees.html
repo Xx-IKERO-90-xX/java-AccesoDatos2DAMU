@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es" data-theme="dark">
+<html class="bg-gray-500" lang="es" data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -14,50 +14,151 @@
   </head>
   <body>
     <header class="navbar bg-base-100 shadow-sm">
-        <div class="flex-1">
-            <a class="btn btn-ghost text-xl">daisyUI</a>
-        </div>
-        <div class="flex-none">
-            <ul class="menu menu-horizontal px-1">
-                <li><a href="http://localhost:8080/empleados">Empleados</a></li>
-                <li><a>Departamentos</a></li>
-            </ul>
-        </div>
+      <div class="flex-1">
+        <a class="btn btn-ghost text-xl">daisyUI</a>
+      </div>
+      <div class="flex-none">
+        <ul class="menu menu-horizontal px-1">
+          <li><a href="http://localhost:8080">Inicio</a></li>
+          <li><a href="http://localhost:8080/empleados">Empleados</a></li>
+          <li>
+            <a href="http://localhost:8080/departamentos">Departamentos</a>
+          </li>
+        </ul>
+      </div>
     </header>
-    <main class="container">
-      <section class="my-8 mx-auto">
-        <div
-          class="mx-auto overflow-x-auto rounded-box border border-base-content/5 bg-base-100"
-        >
-          <table class="table">
-            <!-- head -->
-            <thead>
-              <tr>
-                <th></th>
-                <th>Nombre</th>
-                <th>Job</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- row 1 -->
-              <tr th:each="employee : ${employees}">
-                <th th:text="${employee.id}"></th>
-                <td th:text="${employee.ename}"></td>
-                <td th:text="${employee.job}"></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </main>
-    <footer>
-        <div class="footer footer-center p-4 bg-base-300 text-base-content">
+    <main class="container h-vh mx-auto">
+      <br /><br />
+      <div
+        class="mx-auto my-5 overflow-x-auto rounded-box border border-base-content/5 bg-base-100"
+      >
+        <table class="table mx-auto w-full">
+          <!-- head -->
+          <thead>
+            <tr>
+              <th></th>
+              <th>Nombre</th>
+              <th>Job</th>
+              <th>Departamento</th>
+              <th>
+                <button
+                  class="btn btn-circle btn-xs btn-success font-bold"
+                  onclick="add_employee_modal.showModal()"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-plus-circle-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"
+                    />
+                  </svg>
+                </button>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- row 1 -->
+            <tr th:each="employee : ${employees}">
+              <th th:text="${employee.id}"></th>
+              <td th:text="${employee.ename}"></td>
+              <td th:text="${employee.job}"></td>
+              <td th:text="${employee.department.name}"></td>
+              <td>
+                <button class="btn btn-circle btn-info btn-xs">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-pencil-square"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
+                    />
+                  </svg>
+                </button>
+                <a href="#" class="btn btn-error btn-xs btn-circle">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-trash-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"
+                    />
+                  </svg>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <dialog id="add_employee_modal" class="modal">
+        <div class="modal-box">
+          <form method="dialog">
+            <button
+              class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            >
+              ✕
+            </button>
+          </form>
+          <h3 class="font-bold text-lg">Añadir Empleado</h3>
+          <form
+            th:action="@{/empleados/save}"
+            th:object="${employee}"
+            method="post"
+          >
+            <br />
             <div>
-                <p>Copyright © 2026 - All right reserved by ACME Industries Ltd</p>
+              <label>Nombre</label>
+              <input
+                type="text"
+                th:field="*{ename}"
+                class="input input-success input-sm"
+                required
+              />
             </div>
+            <br />
+            <div>
+              <label>Puesto</label>
+              <input
+                type="text"
+                th:field="*{job}"
+                class="input input-success input-sm"
+              />
+            </div>
+            <br />
+            <div>
+              <label>Departamento:</label>
+              <select th:field="*{department}">
+                <option
+                  th:each="dept : ${departments}"
+                  th:value="${dept.id}"
+                  th:text="${dept.name}"
+                ></option>
+              </select>
+            </div>
+
+            <br /><br />
+            <button class="btn btn-success font-bold" type="submit">
+              Guardar
+            </button>
+          </form>
         </div>
-    </footer>
+      </dialog>
+    </main>
   </body>
 </html>
