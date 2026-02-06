@@ -1,5 +1,6 @@
 package com.vtinstitute.vtinstitute_restapi.model.entity;
 
+import org.springframework.validation.annotation.Validated;
 import jakarta.persistence.*;
 
 @Entity

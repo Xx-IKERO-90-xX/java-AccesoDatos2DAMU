@@ -4,6 +4,7 @@ import com.vtinstitute.vtinstitute_restapi.model.entity.Score;
 
 import java.util.List;
 
+import org.springframework.aop.scope.ScopedProxyFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,5 +47,30 @@ public class ScoreController {
     @DeleteMapping("/delete/{id}")
     public Score delete(@PathVariable(value = "id") int id) {
         return scoreService.delete(id);
+    }
+
+    @GetMapping("/enrollment/passing/{enrollmentId}")
+    public List<Score> getPassingScoresByEnrollment(@PathVariable(value = "enrollmentId") int enrollmentId) {
+        return scoreService.findPassingScoresByEnrollment(enrollmentId);
+    }
+
+    @GetMapping("/enrollment/failed/{enrollmentId}")
+    public List<Score> getFailedScoresByEnrollment(@PathVariable(value = "enrollmentId") int enrollmentId) {
+        return scoreService.findFiledScoresByEnrollment(enrollmentId);
+    }
+
+    @GetMapping("/student/{studentId}")
+    public List<Score> getScoresByStudentId(@PathVariable(value = "studentId") String studentId) {
+        return scoreService.findScoresByStudentId(studentId);
+    }
+
+    @GetMapping("/student/passing/{studentId}")
+    public List<Score> getPassingScoresByStudentId(@PathVariable(value = "studentId") String studentId) {
+        return scoreService.findPassingScoresByStudentId(studentId);
+    }
+
+    @GetMapping("/student/failed/{studentId}")
+    public List<Score> getFailedScoresByStudentId(@PathVariable(value = "studentId") String studentId) {
+        return scoreService.findFailedScoresByStudentId(studentId);
     }
 }

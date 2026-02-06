@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.vtinstitute.vtinstitute_restapi.model.dao.EnrollmentDAO;
 import com.vtinstitute.vtinstitute_restapi.model.dao.ScoreDAO;
+import com.vtinstitute.vtinstitute_restapi.model.dao.StudentDAO;
 import com.vtinstitute.vtinstitute_restapi.model.entity.Score;
 
 
@@ -20,6 +21,9 @@ public class ScoresService {
 
     @Autowired
     private EnrollmentDAO enrollmentDAO;
+
+    @Autowired
+    private StudentDAO studentDAO;
 
     @GetMapping
     public List<Score> findAll() {
@@ -63,5 +67,40 @@ public class ScoresService {
             throw new RuntimeException("Enrollment not found");
         }
         return scoreDAO.findByEnrollmentId(enrollmentId);
+    }
+
+    public List<Score> findPassingScoresByEnrollment(int enrollmentId) {
+        if (!enrollmentDAO.existsById(enrollmentId)) {
+            throw new RuntimeException("Enrollment not found");
+        }
+        return scoreDAO.findPassingScoresByEnrollment(enrollmentId);
+    }
+
+    public List<Score> findFiledScoresByEnrollment(int enrollmentId) {
+        if (!enrollmentDAO.existsById(enrollmentId)) {
+            throw new RuntimeException("Enrollment not found");
+        }
+        return scoreDAO.findFiledScoresByEnrollment(enrollmentId);
+    }
+
+    public List<Score> findScoresByStudentId(String studentId) {
+        if (!studentDAO.existsById(studentId)) {
+            throw new RuntimeException("Student not found");
+        }
+        return scoreDAO.findScoresByStudent(studentId);
+    }
+
+    public List<Score> findPassingScoresByStudentId(String studentId) {
+        if (!studentDAO.existsById(studentId)) {
+            throw new RuntimeException("Student not found");
+        }
+        return scoreDAO.findPassingScoresByStudent(studentId);
+    }
+
+    public List<Score> findFailedScoresByStudentId(String studentId) {
+        if (!studentDAO.existsById(studentId)) {
+            throw new RuntimeException("Student not found");
+        }
+        return scoreDAO.findFailedScoreByStudent(studentId);
     }
 }
