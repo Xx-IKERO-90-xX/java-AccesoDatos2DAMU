@@ -1,0 +1,59 @@
+package com.vtinstitute.vtinstitute_restapi.model.dao;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+import com.vtinstitute.vtinstitute_restapi.model.entity.Score;
+
+@Repository
+public interface ScoreDAO extends CrudRepository<Score, Integer> {
+    List<Score> findByEnrollmentId(Integer enrollmentId);
+
+    @Query("""
+       SELECT s FROM Score s
+       WHERE s.enrollment.id = :enrollmentId
+       AND s.score >= 5  
+    """)
+    List<Score> findPassingScoresByEnrollment(
+        @Param("enrollmentId") Integer enrollmentId
+    );
+
+    @Query("""
+        SELECT s FROM Score s
+        WHERE s.enrollment.id = :enrollmentId
+        AND s.score < 5        
+    """)
+    List<Score> findFiledScoresByEnrollment(
+        @Param("enrollmentId") Integer enrollmentId
+    );
+
+    @Query("""
+        SELECT s FROM Score s
+        WHERE s.enrollment.student.id = :studentId
+        AND s.score >= 5        
+    """)
+    List<Score> findPassingScoresByStudent(
+        @Param("studentId") String studentId
+    );
+
+    @Query("""
+        SELECT s FROM Score s
+        WHERE s.enrollment.student.id = :studentId
+        AND s.score < 5        
+    """)
+    List<Score> findFailedScoreByStudent(
+        @Param("studentId") String studentId
+    );
+
+    @Query("""
+       SELECT s FROM Score s
+       WHERE s.enrollment.student.id = :studentId     
+    """)
+    List<Score> findScoresByStudent(
+        @Param("studentId") String studentId
+    );
+
+}
