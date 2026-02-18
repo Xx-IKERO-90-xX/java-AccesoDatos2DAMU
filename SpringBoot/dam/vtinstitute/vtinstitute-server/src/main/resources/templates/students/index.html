@@ -31,7 +31,7 @@
               <td th:text="${student.phone}"></td>
               <td>
                 <a
-                  href="#"
+                  th:href="@{/students/{code}(code=${student.idcard})}"
                   type="button"
                   class="btn btn-sm btn-circle btn-info"
                 >

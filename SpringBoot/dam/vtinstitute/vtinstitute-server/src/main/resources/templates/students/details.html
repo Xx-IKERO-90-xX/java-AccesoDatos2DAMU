@@ -1,0 +1,81 @@
+<!doctype html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout}"
+>
+  <head>
+    <title>Página de Inicio</title>
+  </head>
+  <body>
+    <section layout:fragment="content">
+      <div class="bg-base-300 min-h-screen rounded-lg shadow-lg">
+        <div class="hero-content flex-col lg:flex-row">
+          <div class="mb-100 w-80">
+            <img
+              th:src="@{/images/user.jpg}"
+              class="max-w-sm mx-auto rounded-full shadow-2xl"
+            />
+          </div>
+          <div>
+            <h1
+              class="text-5xl font-bold"
+              th:text="|Alumno: ${student.idcard}|"
+            ></h1>
+            <h2
+              class="text-2xl font-bold"
+              th:text="|${student.firstname} ${student.lastname}|"
+            ></h2>
+            <br>
+            <a th:href="|mailto:${student.email}|" class="link link-info">
+              <span th:text="${student.email}"></span>
+            </a>
+            <a th:href="|tel:${student.phone}|" class="link link-info ml-4">
+                <span th:text="${student.phone}"></span>
+            </a>
+            <br />
+            <br />
+            <div class="w-full">
+              <div class="overflow-x-auto bg-gray-300 rounded-lg shadow-lg">
+                <table class="table">
+                  <!-- head -->
+                  <thead>
+                    <tr>
+                      <th>Curso</th>
+                      <th>Año</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- row 1 -->
+                    <tr th:each="enrollment : ${enrollments}">
+                      <th th:text="${enrollment.course.name}"></th>
+                      <td th:text="${enrollment.year}"></td>
+                      <td>
+                        <a href="#" class="btn btn-sm btn-info rounded-full">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            class="bi bi-info-circle-fill"
+                            viewBox="0 0 16 16"
+                          >
+                            <path
+                              d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"
+                            />
+                          </svg>
+                          Expediente
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

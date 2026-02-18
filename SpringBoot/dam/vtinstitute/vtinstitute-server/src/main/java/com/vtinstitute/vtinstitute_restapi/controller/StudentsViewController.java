@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.vtinstitute.vtinstitute_restapi.model.entity.Enrollment;
 import com.vtinstitute.vtinstitute_restapi.model.entity.Student;
 import com.vtinstitute.vtinstitute_restapi.service.StudentService;
+import com.vtinstitute.vtinstitute_restapi.service.EnrollmentService;
 
 import org.springframework.ui.Model;
 
@@ -25,6 +27,9 @@ import org.springframework.ui.Model;
 public class StudentsViewController {
     @Autowired
     private StudentService studentService;
+
+    @Autowired
+    private EnrollmentService enrollmentService;
 
     @GetMapping
     public String index(
@@ -41,4 +46,14 @@ public class StudentsViewController {
         return "/students/index";
     }
 
+    @GetMapping("/{code}")
+    public String details(@PathVariable(value = "code") String code, Model model) {
+        List<Enrollment> enrollments = enrollmentService.findByStudentId(code);
+        Student student = studentService.findById(code);
+
+        model.addAttribute("enrollments", enrollments);
+        model.addAttribute("student", student);
+    
+        return "/students/details";
+    }
 }
