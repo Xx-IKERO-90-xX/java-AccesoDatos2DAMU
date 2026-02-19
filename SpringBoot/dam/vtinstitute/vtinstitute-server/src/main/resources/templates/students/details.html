@@ -5,7 +5,7 @@
   layout:decorate="~{layout}"
 >
   <head>
-    <title>Página de Inicio</title>
+    <title th:text="|${student.firstname} ${student.lastname}|"></title>
   </head>
   <body>
     <section layout:fragment="content">
@@ -52,7 +52,7 @@
                       <th th:text="${enrollment.course.name}"></th>
                       <td th:text="${enrollment.year}"></td>
                       <td>
-                        <a href="#" class="btn btn-sm btn-info rounded-full">
+                        <a th:href="@{/students/expedient/{code}(code=${enrollment.id})}" class="btn btn-sm btn-info rounded-full">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="16"

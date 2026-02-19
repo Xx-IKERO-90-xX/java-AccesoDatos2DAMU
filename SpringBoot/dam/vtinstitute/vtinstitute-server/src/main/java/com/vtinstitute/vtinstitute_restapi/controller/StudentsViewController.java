@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.vtinstitute.vtinstitute_restapi.model.entity.Enrollment;
 import com.vtinstitute.vtinstitute_restapi.model.entity.Student;
+import com.vtinstitute.vtinstitute_restapi.model.entity.Score;
 import com.vtinstitute.vtinstitute_restapi.service.StudentService;
 import com.vtinstitute.vtinstitute_restapi.service.EnrollmentService;
+import com.vtinstitute.vtinstitute_restapi.service.ScoresService;
 
 import org.springframework.ui.Model;
 
@@ -30,6 +32,9 @@ public class StudentsViewController {
 
     @Autowired
     private EnrollmentService enrollmentService;
+
+    @Autowired
+    private ScoresService scoreService;
 
     @GetMapping
     public String index(
@@ -55,5 +60,14 @@ public class StudentsViewController {
         model.addAttribute("student", student);
     
         return "/students/details";
+    }
+
+    @GetMapping("/expedient/{code}")
+    public String getStudentScoresByEntollment(@PathVariable(value = "code") int code, Model model) {
+        List<Score> scores = scoreService.findByEnrollment(code);
+
+        model.addAttribute("scores", scores);
+
+        return "/students/expedient";
     }
 }

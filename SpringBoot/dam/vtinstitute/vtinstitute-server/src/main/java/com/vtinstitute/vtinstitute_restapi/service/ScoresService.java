@@ -62,7 +62,6 @@ public class ScoresService {
     }
 
     public List<Score> findByEnrollment(int enrollmentId) {
-
         if (!enrollmentDAO.existsById(enrollmentId)) {
             throw new RuntimeException("Enrollment not found");
         }
