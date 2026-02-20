@@ -1,4 +1,4 @@
-package com.vtinstitute.vtinstitute_restapi.controller;
+package com.vtinstitute.vtinstitute_restapi.controller.api;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

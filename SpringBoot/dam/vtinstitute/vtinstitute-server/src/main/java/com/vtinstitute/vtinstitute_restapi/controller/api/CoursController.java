@@ -1,4 +1,4 @@
-package com.vtinstitute.vtinstitute_restapi.controller;
+package com.vtinstitute.vtinstitute_restapi.controller.api;
 
 import java.util.List;
 

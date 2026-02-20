@@ -1,4 +1,4 @@
-package com.vtinstitute.vtinstitute_restapi.controller;
+package com.vtinstitute.vtinstitute_restapi.controller.view;
 
 import java.util.List;
 

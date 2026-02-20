@@ -102,4 +102,17 @@ public class ScoresService {
         }
         return scoreDAO.findFailedScoreByStudent(studentId);
     }
+
+    public float getFinalScore(List<Score> scores) {
+        float finalScore = 0;
+        int sum = 0;
+        int total = scores.size();
+
+        for (Score score : scores) {
+            sum = sum + score.getScore();
+        }
+
+        finalScore = sum / total;
+        return finalScore;
+    }
 }

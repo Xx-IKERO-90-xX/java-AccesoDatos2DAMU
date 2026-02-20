@@ -18,7 +18,7 @@
       <div class="navbar bg-blue-400 shadow-sm">
         <div class="flex-1">
           <a th:href="@{/}">
-            <img th:src="@{/images/logo.png}" alt="Logo" width="55">
+            <img th:src="@{/images/logo.png}" alt="Logo" width="55" />
           </a>
         </div>
         <div class="flex-none">
@@ -31,9 +31,57 @@
     </header>
 
     <main class="container mt-6 mx-auto">
-      <div layout:fragment="content" class="content" style="height: 100vh">
-        
+      <div
+        id="alert-div"
+        class="text-center"
+        th:if="${not #strings.isEmpty(error)
+            or not #strings.isEmpty(warning)
+            or not #strings.isEmpty(success)
+            or not #strings.isEmpty(info)}"
+      >
+        <br /><br />
+
+        <div
+          th:if="${error}"
+          id="error-alert"
+          role="alert"
+          class="alert alert-danger alert-soft m-2"
+        >
+          <span th:text="${error}"></span>
+        </div>
+
+        <div
+          th:if="${warning}"
+          id="warning-alert"
+          role="alert"
+          class="alert alert-warning alert-soft m-2"
+        >
+          <span th:text="${warning}"></span>
+        </div>
+
+        <div
+          th:if="${success}"
+          id="success-alert"
+          role="alert"
+          class="alert alert-success alert-soft m-2"
+        >
+          <span th:text="${success}"></span>
+        </div>
+
+        <div
+          th:if="${info}"
+          id="info-alert"
+          role="alert"
+          class="alert alert-info alert-soft m-2"
+        >
+          <span th:text="${info}"></span>
+        </div>
       </div>
+      <div
+        layout:fragment="content"
+        class="content"
+        style="height: 100vh"
+      ></div>
       <div class="h-32"></div>
     </main>
 
@@ -41,9 +89,7 @@
       class="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-4"
     >
       <aside>
-        <p>
-          Copyright © 2026 - All right reserved by IES MARE NOSTRUM
-        </p>
+        <p>Copyright © 2026 - All right reserved by IES MARE NOSTRUM</p>
       </aside>
     </footer>
   </body>

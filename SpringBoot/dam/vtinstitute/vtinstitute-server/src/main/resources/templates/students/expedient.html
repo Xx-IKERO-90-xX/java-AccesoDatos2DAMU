@@ -9,7 +9,7 @@
   </head>
   <body>
     <section layout:fragment="content">
-      <div class="overflow-x-auto">
+      <div class="overflow-x-auto shadow rounded-lg">
         <table class="bg-base-200 p-1 table table-xs">
           <thead>
             <tr>
@@ -27,7 +27,7 @@
               <td th:text="${score.subject.hours}"></td>
               <td th:text="${score.score}"></td>
               <td>
-                <button class="btn btn-xs btn-circle btn-info">
+                <button th:onclick="'edit_score_' + ${score.id} + '.showModal()'" class="btn btn-xs btn-circle btn-info">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -45,9 +45,32 @@
                     />
                   </svg>
                 </button>
+
+                <dialog th:id="'edit_score_' + ${score.id}" class="modal">
+                  <div class="modal-box">
+                    <form method="dialog">
+                      <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                    </form>
+                    <h2 th:text="${score.subject.name}"></h2>
+                    <form th:action="@{/scores/update/{id}(id=${score.id})}" method="post">
+                      <input type="hidden" th:value="${enrollment.id}" name="enrollmentId">
+                      <input type="number" name="score" placeholder="Nueva Nota" class="input input-sm input-success" />
+                      <button type="submit" class="btn btn-success btn-sm">Editar</button>
+                    </form>
+                  </div>
+                </dialog>
               </td>
             </tr>
           </tbody>
+          <tfoot>
+            <tr>
+              <th>Nota Final: <span th:text="${finalScore}"></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+          </tfoot>
         </table>
       </div>
     </section>

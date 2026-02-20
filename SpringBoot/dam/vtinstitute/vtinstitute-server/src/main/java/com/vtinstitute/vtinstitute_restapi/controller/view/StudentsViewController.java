@@ -1,4 +1,4 @@
-package com.vtinstitute.vtinstitute_restapi.controller;
+package com.vtinstitute.vtinstitute_restapi.controller.view;
 
 import java.util.List;
 
@@ -65,8 +65,12 @@ public class StudentsViewController {
     @GetMapping("/expedient/{code}")
     public String getStudentScoresByEntollment(@PathVariable(value = "code") int code, Model model) {
         List<Score> scores = scoreService.findByEnrollment(code);
+        float finalScore = scoreService.getFinalScore(scores);
+        Enrollment enrollment = enrollmentService.findById(code);
 
         model.addAttribute("scores", scores);
+        model.addAttribute("finalScore", finalScore);
+        model.addAttribute("enrollment", enrollment);
 
         return "/students/expedient";
     }
