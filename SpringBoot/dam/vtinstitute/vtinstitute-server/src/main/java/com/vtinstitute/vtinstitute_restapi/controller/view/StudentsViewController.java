@@ -1,6 +1,7 @@
 package com.vtinstitute.vtinstitute_restapi.controller.view;
 
 import java.util.List;
+import java.time.Year;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.autoconfigure.web.DataWebProperties.Pageable;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.vtinstitute.vtinstitute_restapi.model.entity.Enrollment;
 import com.vtinstitute.vtinstitute_restapi.model.entity.Student;
 import com.vtinstitute.vtinstitute_restapi.model.entity.Score;
+import com.vtinstitute.vtinstitute_restapi.model.entity.Cours;
 import com.vtinstitute.vtinstitute_restapi.service.StudentService;
+import com.vtinstitute.vtinstitute_restapi.service.CoursService;
 import com.vtinstitute.vtinstitute_restapi.service.EnrollmentService;
 import com.vtinstitute.vtinstitute_restapi.service.ScoresService;
 
@@ -35,6 +38,9 @@ public class StudentsViewController {
 
     @Autowired
     private ScoresService scoreService;
+
+    @Autowired
+    private CoursService coursService;
 
     @GetMapping
     public String index(
@@ -55,7 +61,9 @@ public class StudentsViewController {
     public String details(@PathVariable(value = "code") String code, Model model) {
         List<Enrollment> enrollments = enrollmentService.findByStudentId(code);
         Student student = studentService.findById(code);
-
+        List<Cours> courses = coursService.findAll();
+        
+        model.addAttribute("courses", courses);
         model.addAttribute("enrollments", enrollments);
         model.addAttribute("student", student);
     
@@ -74,4 +82,16 @@ public class StudentsViewController {
 
         return "/students/expedient";
     }
+
+    @PostMapping("/enroll/{idcard}")
+    public String enrollStudent(@PathVariable("idcard") String idcard, @RequestParam("coursId") int coursId) throws Exception {
+        Cours cours = coursService.findById(coursId);
+        Student student = studentService.findById(idcard);
+        int year = Year.now().getValue();
+
+        enrollmentService.enrollStudent(student, cours, year);
+
+        return "redirect:/students/" + idcard;
+    }
+
 }

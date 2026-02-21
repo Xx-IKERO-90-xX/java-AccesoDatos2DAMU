@@ -21,7 +21,7 @@
               <th>Correo</th>
               <th>Telefono</th>
               <th>
-                <button class="btn btn-circle btn-sm btn-success">
+                <button onclick="add_student_modal.showModal()" class="btn btn-circle btn-sm btn-success">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -98,6 +98,48 @@
           >»</a
         >
       </div>
+      <dialog id="add_student_modal" class="modal">
+        <div class="modal-box">
+          <form method="dialog">
+            <button
+              class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            >
+              ✕
+            </button>
+          </form>
+          <h3 class="text-lg font-bold">Nuevo Estudiante</h3>
+          <hr/>
+          <br>
+          <form>
+            <div>
+              <label for="idcard_input">ID Card</label>
+              <input id="idcard_input" type="text" name="idcard" class="input input-info w-full"/>
+            </div>
+            <br>
+            <div>
+              <label for="firstname_input">Nombre</label><br>
+              <input id="firstname_input" name="firstname" class="input input-info w-full" type="text"/>
+            </div>
+            <br>
+            <div>
+              <label for="lastname_input">Apellidos</label><br>
+              <input id="lastname_input" name="lastname" class="input input-info w-full" type="text">
+            </div>
+            <br>
+            <div>
+              <label for="email_input">Correo</label>
+              <input id="email_input" name="email" class="input input-info w-full"/>
+            </div>
+            <br>
+            <div>
+              <label for="phone_input">Telefono</label>
+              <input id="phone_input" name="phone" class="input input-info w-full"/>
+            </div>
+            <br><br>
+            <button type="submit" class="btn btn-block btn-success">Guardar</button>
+          </form>
+        </div>
+      </dialog>
     </section>
   </body>
 </html>

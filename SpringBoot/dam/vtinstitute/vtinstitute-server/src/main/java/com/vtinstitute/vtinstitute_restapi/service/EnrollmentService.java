@@ -9,10 +9,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.vtinstitute.vtinstitute_restapi.model.dao.EnrollmentDAO;
+import com.vtinstitute.vtinstitute_restapi.model.dao.ScoreDAO;
 import com.vtinstitute.vtinstitute_restapi.model.dao.StudentDAO;
+import com.vtinstitute.vtinstitute_restapi.model.entity.Cours;
 import com.vtinstitute.vtinstitute_restapi.model.entity.Enrollment;
+import com.vtinstitute.vtinstitute_restapi.model.entity.Score;
 import com.vtinstitute.vtinstitute_restapi.model.entity.Student;
+import com.vtinstitute.vtinstitute_restapi.model.entity.SubjectCours;
 
+import jakarta.transaction.Transactional;
+
+import com.vtinstitute.vtinstitute_restapi.model.entity.Subject;
 
 @Service
 public class EnrollmentService {
@@ -20,7 +27,19 @@ public class EnrollmentService {
     private EnrollmentDAO enrollmentDAO;
 
     @Autowired
+    private ScoreDAO scoreDAO;
+
+    @Autowired
     private StudentDAO studentDAO;
+
+    @Autowired
+    private SubjectService subjectService;
+
+    @Autowired
+    private ScoresService scoreService;
+
+    @Autowired
+    private StudentService studentService;
 
     public List<Enrollment> findAll() {
         return (List<Enrollment>) enrollmentDAO.findAll();
@@ -48,6 +67,7 @@ public class EnrollmentService {
         currentEnrollment.setCourse(enrollment.getCourse());
         return enrollmentDAO.save(currentEnrollment);
     }
+
     public Enrollment delete(int id) {
         if (!enrollmentDAO.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Enrollment not found");
@@ -63,5 +83,55 @@ public class EnrollmentService {
         }
         Student student = studentDAO.findById(studentId).get();
         return enrollmentDAO.findByStudent(student);
+    }
+
+    public boolean canEnroll(Student student, Cours cours) {
+        return enrollmentDAO.countByStudentAndCourse(student, cours) < 2;
+    }
+
+    public boolean isFirstEnrollment(String idcard) {
+        int count = enrollmentDAO.getCountEnrollmentStudent(idcard);
+        return count == 0;
+    }
+
+    @Transactional
+    public void enrollStudent(Student student, Cours cours, int year) throws Exception {
+        List<Enrollment> enrollments =
+            enrollmentDAO.findByStudentAndCourse(cours.getId(), student.getIdcard());
+
+        if (enrollments.size() >= 2) {
+            throw new Exception("No se puede matricular a un estudiante más de 2 veces en un mismo curso.");
+        }
+
+        Enrollment enrollment = new Enrollment();
+        enrollment.setCourse(cours);
+        enrollment.setStudent(student);
+        enrollment.setYear(year);
+
+        enrollmentDAO.save(enrollment); 
+
+        List<SubjectCours> subjects;
+
+        System.out.println(isFirstEnrollment(student.getIdcard()));
+
+
+        if (isFirstEnrollment(student.getIdcard())) {
+            subjects = subjectService.getFirstYearSubjectByCours(cours);
+        } else {
+            subjects = subjectService.getSecondYearSubjectByCours(cours);
+        }
+
+        for (SubjectCours sc : subjects) {
+            Subject subject = sc.getSubject();
+
+            if (!scoreDAO.existsByEnrollmentAndSubject(enrollment, subject)) {
+                Score score = new Score();
+                score.setEnrollment(enrollment);
+                score.setSubject(subject);
+                score.setScore(null);
+
+                scoreService.save(score);
+            }
+        }
     }
 }

@@ -44,7 +44,10 @@
                       <th>Curso</th>
                       <th>Año</th>
                       <th>
-                        <button class="btn btn-success btn-sm rounded-full">
+                        <button
+                          onclick="enroll_modal.showModal()"
+                          class="btn btn-success btn-sm rounded-full"
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="16"
@@ -95,6 +98,29 @@
           </div>
         </div>
       </div>
+      <dialog id="enroll_modal" class="modal">
+        <div class="modal-box">
+          <form method="dialog">
+            <button
+              class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            >
+              ✕
+            </button>
+          </form>
+          <form method="post" th:action="@{/students/enroll/{idcard}(idcard=${student.idcard})}">
+            <h3>Curso</h3>
+            <select name="coursId" class="select select-info w-full">
+              <option
+                th:each="course : ${courses}"
+                th:text="${course.name}"
+                th:value="${course.id}"
+              ></option>
+            </select>
+            <br><br>
+            <button class="btn btn-block btn-success">Matricular</button>
+          </form>
+        </div>
+      </dialog>
     </section>
   </body>
 </html>

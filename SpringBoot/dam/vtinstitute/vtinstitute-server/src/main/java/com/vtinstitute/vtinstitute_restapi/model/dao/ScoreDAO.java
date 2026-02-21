@@ -6,7 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import com.vtinstitute.vtinstitute_restapi.model.entity.Enrollment;
 import com.vtinstitute.vtinstitute_restapi.model.entity.Score;
+import com.vtinstitute.vtinstitute_restapi.model.entity.Subject;
 
 @Repository
 public interface ScoreDAO extends CrudRepository<Score, Integer> {
@@ -56,4 +59,5 @@ public interface ScoreDAO extends CrudRepository<Score, Integer> {
         @Param("studentId") String studentId
     );
 
+    boolean existsByEnrollmentAndSubject(Enrollment enrollment, Subject subject);
 }

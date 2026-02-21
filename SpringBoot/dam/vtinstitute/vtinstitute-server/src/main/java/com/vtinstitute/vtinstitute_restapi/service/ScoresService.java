@@ -109,7 +109,11 @@ public class ScoresService {
         int total = scores.size();
 
         for (Score score : scores) {
-            sum = sum + score.getScore();
+            Integer value = score.getScore();
+
+            if (value != null) {
+                sum = sum + value;
+            }
         }
 
         finalScore = sum / total;
