@@ -4,9 +4,7 @@ import java.util.List;
 import java.time.Year;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.data.autoconfigure.web.DataWebProperties.Pageable;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -93,6 +91,7 @@ public class StudentsViewController {
             redirectAttributes.addFlashAttribute("success", "Matriculación realizado correctamente.");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "No se puede matricular a un mismo curso más de 2 veces");
+            e.printStackTrace();
         }
 
         return "redirect:/students/" + idcard;

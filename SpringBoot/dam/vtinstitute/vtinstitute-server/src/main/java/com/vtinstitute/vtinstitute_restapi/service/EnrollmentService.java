@@ -98,19 +98,29 @@ public class EnrollmentService {
         return count;
     }
 
+    public Enrollment getLastEnrollmentStudent(String idcard) {
+        Enrollment enrollment = enrollmentDAO.getLastStudentEnrollment(idcard)
+            .stream()
+            .findFirst()
+            .orElse(null);
+        
+        return enrollment;
+    }
+
     @Transactional
     public void enrollStudent(String idcard, int idcours, int year) throws Exception {
+
         Student student = studentService.findById(idcard);
         Cours cours = coursService.findById(idcours);
 
         if (student == null || cours == null) {
-            throw new Exception("Hubo un fallo a la hora de econtrar el estudiante y el curso");
+            throw new Exception("Hubo un fallo al encontrar el estudiante o el curso");
         }
-        
+
         List<Enrollment> enrollments =
             enrollmentDAO.findByStudentAndCourse(cours.getId(), student.getIdcard());
-        
-        if (enrollments.size() >= 2) {
+
+        if (enrollments.size() > 1) {
             throw new Exception("No se puede matricular a un estudiante más de 2 veces en un mismo curso.");
         }
 
@@ -121,27 +131,33 @@ public class EnrollmentService {
 
         List<SubjectCours> subjects;
 
-        if (getCountEnrollmentsStudent(student.getIdcard()) > 0) {
-            subjects = subjectService.getSecondYearSubjectByCours(cours);
-            enrollmentDAO.save(enrollment);
-        } else {
+        if (enrollments.isEmpty()) {
+
             subjects = subjectService.getFirstYearSubjectByCours(cours);
-            List<Score> failSubjects = scoreService.getFailedScoresByStudentAndCours(idcard, idcours);
             enrollmentDAO.save(enrollment);
 
-            for (Score score : failSubjects) {
+        } else {
+            subjects = subjectService.getSecondYearSubjectByCours(cours);
+
+            Enrollment lastEnrollment = enrollments.get(0); // luego mejoramos esto
+            enrollmentDAO.save(enrollment);
+
+            List<Score> failScores =
+                scoreService.getFailedScoresByEnrollment(lastEnrollment.getId());
+
+            for (Score score : failScores) {
                 Score sc = new Score();
                 sc.setEnrollment(enrollment);
                 sc.setSubject(score.getSubject());
                 sc.setScore(score.getScore());
+
                 scoreService.save(sc);
             }
         }
 
-        enrollmentDAO.save(enrollment);
-
         for (SubjectCours sc : subjects) {
             Subject subject = sc.getSubject();
+
             if (!scoreDAO.existsByEnrollmentAndSubject(enrollment, subject)) {
                 Score score = new Score();
                 score.setEnrollment(enrollment);

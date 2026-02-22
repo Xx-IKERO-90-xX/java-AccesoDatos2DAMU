@@ -35,7 +35,7 @@ public interface EnrollmentDAO extends CrudRepository<Enrollment, Integer> {
     int getCountEnrollmentStudent(String idcard);
 
     @Query("""
-       SELECT e FROM enrollment e
+       SELECT e FROM Enrollment e
        WHERE e.student.idcard = :idcard
        ORDER BY e.year DESC     
     """)

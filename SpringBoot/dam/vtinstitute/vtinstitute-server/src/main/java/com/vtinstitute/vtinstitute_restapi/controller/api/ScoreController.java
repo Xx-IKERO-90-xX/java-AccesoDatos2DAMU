@@ -4,7 +4,6 @@ import com.vtinstitute.vtinstitute_restapi.model.entity.Score;
 
 import java.util.List;
 
-import org.springframework.aop.scope.ScopedProxyFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
