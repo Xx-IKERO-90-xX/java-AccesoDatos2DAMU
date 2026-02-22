@@ -87,12 +87,9 @@ public class StudentsViewController {
 
     @PostMapping("/enroll/{idcard}")
     public String enrollStudent(@PathVariable("idcard") String idcard, @RequestParam("coursId") int coursId, RedirectAttributes redirectAttributes) throws Exception {
-        Cours cours = coursService.findById(coursId);
-        Student student = studentService.findById(idcard);
         int year = Year.now().getValue();
-
         try {
-            enrollmentService.enrollStudent(student, cours, year);
+            enrollmentService.enrollStudent(idcard, coursId, year);
             redirectAttributes.addFlashAttribute("success", "Matriculación realizado correctamente.");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "No se puede matricular a un mismo curso más de 2 veces");

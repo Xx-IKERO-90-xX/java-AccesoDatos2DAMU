@@ -119,4 +119,9 @@ public class ScoresService {
         finalScore = sum / total;
         return finalScore;
     }
+
+    public List<Score> getFailedScoresByStudentAndCours(int enrollmentId) {
+        List<Score> scores = scoreDAO.getFailedScoresByEnrollment(enrollmentId);
+        return scores;
+    }
 }

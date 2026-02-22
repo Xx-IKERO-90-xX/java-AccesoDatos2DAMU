@@ -15,7 +15,6 @@ import org.springframework.ui.Model;
 
 @Controller
 public class MainViewController {
-
     @GetMapping("/")
     public String index() {
         return "/main/index";
