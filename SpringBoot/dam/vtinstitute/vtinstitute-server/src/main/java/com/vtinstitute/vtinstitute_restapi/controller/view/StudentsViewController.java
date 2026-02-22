@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.vtinstitute.vtinstitute_restapi.model.entity.Enrollment;
 import com.vtinstitute.vtinstitute_restapi.model.entity.Student;
@@ -49,7 +50,8 @@ public class StudentsViewController {
         Model model) {
         
         Page<Student> studentPage = studentService.findStudentsPaged(page, size);
-
+        
+        model.addAttribute("student", new Student());
         model.addAttribute("students", ((Slice<Student>) studentPage).getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", studentPage.getTotalPages());
@@ -84,12 +86,54 @@ public class StudentsViewController {
     }
 
     @PostMapping("/enroll/{idcard}")
-    public String enrollStudent(@PathVariable("idcard") String idcard, @RequestParam("coursId") int coursId) throws Exception {
+    public String enrollStudent(@PathVariable("idcard") String idcard, @RequestParam("coursId") int coursId, RedirectAttributes redirectAttributes) throws Exception {
         Cours cours = coursService.findById(coursId);
         Student student = studentService.findById(idcard);
         int year = Year.now().getValue();
 
-        enrollmentService.enrollStudent(student, cours, year);
+        try {
+            enrollmentService.enrollStudent(student, cours, year);
+            redirectAttributes.addFlashAttribute("success", "Matriculación realizado correctamente.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "No se puede matricular a un mismo curso más de 2 veces");
+        }
+
+        return "redirect:/students/" + idcard;
+    }
+
+    @PostMapping("/add")
+    public String addStudent(@ModelAttribute Student student, RedirectAttributes redirectAttributes) {
+        try {
+            studentService.save(student);
+            redirectAttributes.addFlashAttribute("success", "Se ha agregado el estudiante " + student.getIdcard() + " correctamente.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Ha habido un fallo a la hora de agregar el estudiante, revisa los datos.");
+        }
+        return "redirect:/students";
+    } 
+
+    @PostMapping("/edit/{idcard}")
+    public String editStudent(
+        @PathVariable("idcard") String idcard,
+        @RequestParam("firstname") String firstname,
+        @RequestParam("lastname") String lastname,
+        @RequestParam("email") String email,
+        @RequestParam("phone") String phone,
+        RedirectAttributes redirectAttributes
+    ) {
+        try {
+            Student student = studentService.findById(idcard);
+            student.setFirstname(firstname);
+            student.setLastname(lastname);
+            student.setEmail(email);
+            student.setPhone(phone);
+
+            studentService.save(student);
+            redirectAttributes.addFlashAttribute("success", "Se ha editado el estudiante " + student.getIdcard() + " correctamente!");
+
+        } catch(Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Ha habido un fallo en la edicion del estudiante, revise los datos.");
+        }
 
         return "redirect:/students/" + idcard;
     }

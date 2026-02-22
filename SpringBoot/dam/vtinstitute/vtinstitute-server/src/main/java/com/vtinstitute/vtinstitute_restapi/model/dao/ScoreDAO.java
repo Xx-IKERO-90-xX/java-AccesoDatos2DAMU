@@ -13,6 +13,11 @@ import com.vtinstitute.vtinstitute_restapi.model.entity.Subject;
 
 @Repository
 public interface ScoreDAO extends CrudRepository<Score, Integer> {
+    @Query("""
+        SELECT s FROM Score s
+        WHERE s.enrollment.id = :enrollmentId
+        ORDER BY s.score DESC     
+    """)
     List<Score> findByEnrollmentId(Integer enrollmentId);
 
     @Query("""

@@ -89,9 +89,9 @@ public class EnrollmentService {
         return enrollmentDAO.countByStudentAndCourse(student, cours) < 2;
     }
 
-    public boolean isFirstEnrollment(String idcard) {
+    public int getCountEnrollmentsStudent(String idcard) {
         int count = enrollmentDAO.getCountEnrollmentStudent(idcard);
-        return count == 0;
+        return count;
     }
 
     @Transactional
@@ -108,18 +108,15 @@ public class EnrollmentService {
         enrollment.setStudent(student);
         enrollment.setYear(year);
 
-        enrollmentDAO.save(enrollment); 
-
         List<SubjectCours> subjects;
-
-        System.out.println(isFirstEnrollment(student.getIdcard()));
-
-
-        if (isFirstEnrollment(student.getIdcard())) {
-            subjects = subjectService.getFirstYearSubjectByCours(cours);
-        } else {
+        
+        if (getCountEnrollmentsStudent(student.getIdcard()) > 0) {
             subjects = subjectService.getSecondYearSubjectByCours(cours);
+        } else {
+            subjects = subjectService.getFirstYearSubjectByCours(cours);
         }
+
+        enrollmentDAO.save(enrollment);
 
         for (SubjectCours sc : subjects) {
             Subject subject = sc.getSubject();

@@ -110,30 +110,33 @@
           <h3 class="text-lg font-bold">Nuevo Estudiante</h3>
           <hr/>
           <br>
-          <form>
+          <form 
+            th:action="@{/students/add}"
+            th:object="${student}"
+            method="post">
             <div>
               <label for="idcard_input">ID Card</label>
-              <input id="idcard_input" type="text" name="idcard" class="input input-info w-full"/>
+              <input id="idcard_input" type="text" th:field="*{idcard}" class="input input-info w-full" required/>
             </div>
             <br>
             <div>
               <label for="firstname_input">Nombre</label><br>
-              <input id="firstname_input" name="firstname" class="input input-info w-full" type="text"/>
+              <input id="firstname_input" th:field="*{firstname}" class="input input-info w-full" type="text" required/>
             </div>
             <br>
             <div>
               <label for="lastname_input">Apellidos</label><br>
-              <input id="lastname_input" name="lastname" class="input input-info w-full" type="text">
+              <input id="lastname_input" th:field="*{lastname}" class="input input-info w-full" type="text" required />
             </div>
             <br>
             <div>
               <label for="email_input">Correo</label>
-              <input id="email_input" name="email" class="input input-info w-full"/>
+              <input id="email_input" th:field="*{email}" class="input input-info w-full"/>
             </div>
             <br>
             <div>
               <label for="phone_input">Telefono</label>
-              <input id="phone_input" name="phone" class="input input-info w-full"/>
+              <input id="phone_input" th:field="*{phone}" class="input input-info w-full"/>
             </div>
             <br><br>
             <button type="submit" class="btn btn-block btn-success">Guardar</button>
