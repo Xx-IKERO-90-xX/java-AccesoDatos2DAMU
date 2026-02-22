@@ -9,110 +9,132 @@
   </head>
   <body>
     <section layout:fragment="content">
-      <div class="bg-base-300 min-h-screen rounded-lg shadow-lg">
-        <div class="hero-content flex-col lg:flex-row">
-          <div class="mb-100 w-80">
+      <div class="bg-base-300 min-h-screen rounded-lg shadow-lg p-6">
+        <div
+          class="hero-content flex flex-col lg:flex-row items-center lg:items-start gap-8"
+        >
+          <!-- Imagen del estudiante -->
+          <div class="w-48 md:w-80 flex-shrink-0">
             <img
               th:src="@{/images/user.jpg}"
-              class="max-w-sm mx-auto rounded-full shadow-2xl"
+              class="rounded-full shadow-2xl w-full object-cover"
+              alt="Foto del estudiante"
             />
           </div>
-          <div>
+
+          <!-- Información del estudiante -->
+          <div class="flex-1">
             <h1
-              class="text-5xl font-bold"
+              class="text-3xl md:text-5xl font-bold mb-2"
               th:text="|Alumno: ${student.idcard}|"
             ></h1>
             <h2
-              class="text-2xl font-bold"
+              class="text-xl md:text-2xl font-semibold mb-4"
               th:text="|${student.firstname} ${student.lastname}|"
             ></h2>
-            <br />
-            <a th:href="|mailto:${student.email}|" class="link link-info">
-              <span th:text="${student.email}"></span>
-            </a>
-            <a th:href="|tel:${student.phone}|" class="link link-info ml-4">
-              <span th:text="${student.phone}"></span>
-            </a>
-            <br><br>
-            <button class="btn btn-success font-bold rounded-full" onclick="edit_student_modal.showModal()">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-pencil-square"
-                viewBox="0 0 16 16"
+
+            <!-- Contacto -->
+            <div class="flex flex-wrap gap-4 mb-6">
+              <a
+                th:href="|mailto:${student.email}|"
+                class="link link-info font-medium"
+                th:text="${student.email}"
+              ></a>
+              <a
+                th:href="|tel:${student.phone}|"
+                class="link link-info font-medium"
+                th:text="${student.phone}"
+              ></a>
+            </div>
+
+            <!-- Botones -->
+            <div class="flex flex-wrap gap-4 mb-6">
+              <button
+                class="btn btn-success btn-sm font-bold rounded-full flex items-center gap-2"
+                onclick="edit_student_modal.showModal()"
               >
-                <path
-                  d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
-                />
-                <path
-                  fill-rule="evenodd"
-                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
-                />
-              </svg>
-              Editar
-            </button>
-            <br /><br>
-            <div class="w-full">
-              <div class="overflow-x-auto bg-gray-300 rounded-lg shadow-lg">
-                <table class="table">
-                  <!-- head -->
-                  <thead>
-                    <tr>
-                      <th>Curso</th>
-                      <th>Año</th>
-                      <th>
-                        <button
-                          onclick="enroll_modal.showModal()"
-                          class="btn btn-success btn-sm rounded-full"
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-pencil-square"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
+                  />
+                </svg>
+                Editar
+              </button>
+
+              <button
+                class="btn btn-success btn-sm rounded-full flex items-center gap-2"
+                onclick="enroll_modal.showModal()"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-pen-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001"
+                  />
+                </svg>
+                Matricular
+              </button>
+            </div>
+
+            <!-- Tabla de cursos -->
+            <div class="overflow-x-auto bg-gray-100 rounded-lg shadow-md">
+              <table class="table w-full">
+                <thead class="bg-gray-200">
+                  <tr>
+                    <th>Curso</th>
+                    <th>Año</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    th:each="enrollment : ${enrollments}"
+                    class="hover:bg-gray-50"
+                  >
+                    <td
+                      th:text="${enrollment.course.name}"
+                      class="font-medium"
+                    ></td>
+                    <td th:text="${enrollment.year}"></td>
+                    <td>
+                      <a
+                        th:href="@{/students/expedient/{code}(code=${enrollment.id})}"
+                        class="btn btn-sm btn-info rounded-full"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          class="bi bi-info-circle-fill"
+                          viewBox="0 0 16 16"
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            fill="currentColor"
-                            class="bi bi-pen-fill"
-                            viewBox="0 0 16 16"
-                          >
-                            <path
-                              d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001"
-                            />
-                          </svg>
-                          Matricular
-                        </button>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- row 1 -->
-                    <tr th:each="enrollment : ${enrollments}">
-                      <th th:text="${enrollment.course.name}"></th>
-                      <td th:text="${enrollment.year}"></td>
-                      <td>
-                        <a
-                          th:href="@{/students/expedient/{code}(code=${enrollment.id})}"
-                          class="btn btn-sm btn-info rounded-full"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            fill="currentColor"
-                            class="bi bi-info-circle-fill"
-                            viewBox="0 0 16 16"
-                          >
-                            <path
-                              d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"
-                            />
-                          </svg>
-                          Expediente
-                        </a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                          <path
+                            d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"
+                          />
+                        </svg>
+                        Expediente
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -127,38 +149,74 @@
               ✕
             </button>
           </form>
-          <h3 class="text-lg font-bold">Editar Estudiante <span th:value="${student.idcard}"></span></h3>
-          <hr/>
-          <br>
-          <form 
+          <h3 class="text-lg font-bold">
+            Editar Estudiante <span th:value="${student.idcard}"></span>
+          </h3>
+          <hr />
+          <br />
+          <form
             th:action="@{/students/edit/{idcard}(idcard=${student.idcard})}"
-            method="post">
+            method="post"
+          >
             <div>
               <label for="idcard_input">ID Card</label>
-              <input id="idcard_input" type="text" th:value="${student.idcard}" class="input input-info w-full" required disabled/>
+              <input
+                id="idcard_input"
+                type="text"
+                th:value="${student.idcard}"
+                class="input input-info w-full"
+                required
+                disabled
+              />
             </div>
-            <br>
+            <br />
             <div>
-              <label for="firstname_input">Nombre</label><br>
-              <input id="firstname_input" name="firstname" th:value="${student.firstname}" class="input input-info w-full" type="text" required/>
+              <label for="firstname_input">Nombre</label><br />
+              <input
+                id="firstname_input"
+                name="firstname"
+                th:value="${student.firstname}"
+                class="input input-info w-full"
+                type="text"
+                required
+              />
             </div>
-            <br>
+            <br />
             <div>
-              <label for="lastname_input">Apellidos</label><br>
-              <input id="lastname_input" name="lastname" th:value="${student.lastname}" class="input input-info w-full" type="text" required />
+              <label for="lastname_input">Apellidos</label><br />
+              <input
+                id="lastname_input"
+                name="lastname"
+                th:value="${student.lastname}"
+                class="input input-info w-full"
+                type="text"
+                required
+              />
             </div>
-            <br>
+            <br />
             <div>
               <label for="email_input">Correo</label>
-              <input id="email_input" name="email" th:value="${student.email}" class="input input-info w-full"/>
+              <input
+                id="email_input"
+                name="email"
+                th:value="${student.email}"
+                class="input input-info w-full"
+              />
             </div>
-            <br>
+            <br />
             <div>
               <label for="phone_input">Telefono</label>
-              <input id="phone_input" name="phone" th:value="${student.phone}" class="input input-info w-full"/>
+              <input
+                id="phone_input"
+                name="phone"
+                th:value="${student.phone}"
+                class="input input-info w-full"
+              />
             </div>
-            <br><br>
-            <button type="submit" class="btn btn-block btn-success">Guardar</button>
+            <br /><br />
+            <button type="submit" class="btn btn-block btn-success">
+              Guardar
+            </button>
           </form>
         </div>
       </dialog>
