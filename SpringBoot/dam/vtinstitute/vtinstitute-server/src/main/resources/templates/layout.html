@@ -23,8 +23,48 @@
         </div>
         <div class="flex-none">
           <ul class="menu menu-horizontal px-1">
-            <li><a href="#">Cursos</a></li>
-            <li><a th:href="@{/students}">Alumnos</a></li>
+            <li
+              th:if="${session.rol == 'ADMIN'}"
+              sec:authorize="hasRole('ADMIN')"
+            >
+              <a href="#">Cursos</a>
+            </li>
+            <li
+              th:if="${session.rol == 'ADMIN'}"
+              sec:authorize="hasRole('ADMIN')"
+            >
+              <a th:href="@{/students}">Alumnos</a>
+            </li>
+          </ul>
+        </div>
+        <div class="dropdown dropdown-end">
+          <div
+            tabindex="0"
+            role="button"
+            class="btn btn-ghost btn-circle avatar"
+            th:if="${session.rol == 'ADMIN' || session.rol == 'STUDENT'}"
+          >
+            <div class="w-10 rounded-full">
+              <img
+                alt="Tailwind CSS Navbar component"
+                th:src="@{/images/user.jpg}"
+              />
+            </div>
+          </div>
+          <ul
+            tabindex="-1"
+            class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+          >
+            <li>
+              <a th:href="@{/profile/{code}(code=${session.idcard})}" th:if="${session.rol == 'STUDENT'}" class="justify-between">
+                Profile
+              </a>
+            </li>
+            <li>
+              <form th:action="@{/auth/logout}" method="post">
+                <button type="submit">Logout</button>
+              </form>
+            </li>
           </ul>
         </div>
       </div>

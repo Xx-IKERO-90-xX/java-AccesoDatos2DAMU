@@ -1,10 +1,8 @@
 package com.vtinstitute.vtinstitute_restapi.service;
 
 import java.util.List;
-
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.data.autoconfigure.web.DataWebProperties.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -59,6 +57,15 @@ public class StudentService {
         }
         Student student = studentDAO.findById(code).get();
         studentDAO.delete(student);
+        return student;
+    }
+
+    public Student getStudentByIdcardEmail(String email, String idcard) {
+        Student student = studentDAO.getStudentByIdcardEmail(email, idcard)
+            .stream()
+            .findFirst()
+            .orElse(null);
+        
         return student;
     }
 }

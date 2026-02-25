@@ -1,0 +1,45 @@
+<!doctype html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout}"
+>
+  <head>
+    <title>Expediente</title>
+  </head>
+  <body>
+    <section layout:fragment="content">
+      <div class="overflow-x-auto shadow rounded-lg">
+        <table class="bg-base-200 p-1 table table-xs">
+          <thead>
+            <tr>
+              <th>Modulo</th>
+              <th>Año</th>
+              <th>Horas</th>
+              <th>Nota</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="score : ${scores}">
+              <th th:text="${score.subject.name}"></th>
+              <td th:text="${score.subject.year}"></td>
+              <td th:text="${score.subject.hours}"></td>
+              <td th:text="${score.score}"></td>
+              <td></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>Nota Final: <span th:text="${finalScore}"></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+  </body>
+</html>

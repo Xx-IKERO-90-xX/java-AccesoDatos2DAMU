@@ -5,7 +5,7 @@
   layout:decorate="~{layout}"
 >
   <head>
-    <title>Página de Inicio</title>
+    <title th:text="${score.enrollment.cours.name}"></title>
   </head>
   <body>
     <section layout:fragment="content">
@@ -27,7 +27,7 @@
               <td th:text="${score.subject.hours}"></td>
               <td th:text="${score.score}"></td>
               <td>
-                <button th:onclick="'edit_score_' + ${score.id} + '.showModal()'" class="btn btn-xs btn-circle btn-info">
+                <button th:if="${session.rol == 'ADMIN'}" th:onclick="'edit_score_' + ${score.id} + '.showModal()'" class="btn btn-xs btn-circle btn-info">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
