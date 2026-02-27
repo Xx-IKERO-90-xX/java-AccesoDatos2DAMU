@@ -45,7 +45,8 @@ public class StudentsViewController {
     public String index(
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size,
-        Model model) {
+        Model model
+    ) {
         
         Page<Student> studentPage = studentService.findStudentsPaged(page, size);
         
@@ -58,7 +59,10 @@ public class StudentsViewController {
     }
 
     @GetMapping("/{code}")
-    public String details(@PathVariable(value = "code") String code, Model model) {
+    public String details(
+        @PathVariable(value = "code") String code, 
+        Model model
+    ) {
         List<Enrollment> enrollments = enrollmentService.findByStudentId(code);
         Student student = studentService.findById(code);
         List<Cours> courses = coursService.findAll();

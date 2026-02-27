@@ -74,4 +74,19 @@ public interface ScoreDAO extends CrudRepository<Score, Integer> {
     );
 
     boolean existsByEnrollmentAndSubject(Enrollment enrollment, Subject subject);
+
+    @Query("""
+        SELECT s FROM Score s
+        WHERE s.enrollment.student.idcard = :idcard
+        AND s.enrollment.course.id = :idcours        
+    """)
+    List<Score> getByIdcardCours(String idcard, int idcours);
+
+
+    @Query("""
+        SELECT s FROM Score s
+        WHERE s.enrollment.id = :enrollmentId
+        AND s.subject.id = :subjectId
+    """)
+    List<Score> getScoreByEnrollmentSubject(int enrollmentId, int subjectId);
 }

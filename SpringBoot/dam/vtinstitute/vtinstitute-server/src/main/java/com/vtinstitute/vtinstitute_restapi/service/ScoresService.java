@@ -124,4 +124,18 @@ public class ScoresService {
         List<Score> scores = scoreDAO.getFailedScoresByEnrollment(enrollmentId);
         return scores;
     }
+
+    public List<Score> getByIdcardCours(String idcard, int coursId) {
+        List<Score> scores = scoreDAO.getByIdcardCours(idcard, coursId);
+        return scores;
+    }
+
+    public Score getScoreByEnrollmentSubject(int enrollmentId, int subjectId) {
+        Score score = scoreDAO.getScoreByEnrollmentSubject(enrollmentId, subjectId)
+            .stream()
+            .findFirst()
+            .orElse(null);
+        
+        return score;
+    }
 }

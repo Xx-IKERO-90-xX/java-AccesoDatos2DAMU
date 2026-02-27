@@ -17,6 +17,5 @@ public interface StudentDAO extends JpaRepository<Student, String> {
         WHERE s.idcard = :idcard
         AND s.email = :email
             """)
-    List<Student> getStudentByIdcardEmail(@Param("email") String email, @Param("idcard") String idcard);
-    
+    List<Student> getStudentByIdcardEmail(@Param("email") String email, @Param("idcard") String idcard); 
 }

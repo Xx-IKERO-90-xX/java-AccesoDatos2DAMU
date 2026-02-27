@@ -101,7 +101,11 @@ public class AuthController {
     }
 
     @PostMapping("/auth/logout")
-    public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+    public String logout(
+        HttpSession session, 
+        HttpServletRequest request, 
+        HttpServletResponse response
+    ) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (auth != null) {

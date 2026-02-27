@@ -42,6 +42,7 @@ public class StudentService {
         if (!studentDAO.existsById(code)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Student not found");
         }
+        
         Student currentStudent = studentDAO.findById(code).get();
         currentStudent.setFirstname(student.getFirstname());
         currentStudent.setLastname(student.getLastname());

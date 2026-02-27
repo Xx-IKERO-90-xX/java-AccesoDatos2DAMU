@@ -18,6 +18,7 @@ public class SecurityConfig {
                 .requestMatchers("/students/**").hasRole("ADMIN")
                 .requestMatchers("/scores/**").hasAnyRole("STUDENT", "ADMIN")
                 .requestMatchers("/profile/**").hasRole("STUDENT")
+                .requestMatchers("/api/**").permitAll()
                 .anyRequest().authenticated()
             )
             .logout(logout -> logout
