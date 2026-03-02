@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vtinstitute.vtinstitute_restapi.model.entity.Student;
+import com.vtinstitute.vtinstitute_restapi.model.entity.Enrollment;
 import com.vtinstitute.vtinstitute_restapi.model.entity.Score;
 import com.vtinstitute.vtinstitute_restapi.service.StudentService;
 import com.vtinstitute.vtinstitute_restapi.service.EnrollmentService;
@@ -31,6 +32,14 @@ public class ApiController {
 
     @Autowired
     private EnrollmentService enrollmentService;
+
+    @GetMapping("/students/{idcard}")
+    public Student findStudentByIdcard(
+        @RequestParam("idcard") String idcard
+    ) {
+        Student student = studentService.findById(idcard);
+        return student;
+    }
     
     @PostMapping("/students/add")
     public Student add(
@@ -61,15 +70,24 @@ public class ApiController {
     }
 
     @PutMapping("/scores/qualify")
-    public Score qualfyScore(
+    public ResponseEntity<Void> qualfyScore(
         @RequestParam("enrollment") int enrollmentId,
         @RequestParam("subject") int subjectId,
         @RequestParam("score") int scoreNum
-    ) {
+    ) throws Exception {
         Score score = scoreService.getScoreByEnrollmentSubject(enrollmentId, subjectId);
         score.setScore(scoreNum);
 
         Score score1 = scoreService.save(score);
-        return score1;
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/enrollments/")
+    public List<Enrollment> getEnrollmentsByStudentCours(
+        @RequestParam("idcard") String idcard,
+        @RequestParam("idcours") int idcours
+    ) throws Exception {
+        List<Enrollment> enrollments = enrollmentService.getEnrollmentsByStudentCours(idcard, idcours);
+        return enrollments;
     }
 }

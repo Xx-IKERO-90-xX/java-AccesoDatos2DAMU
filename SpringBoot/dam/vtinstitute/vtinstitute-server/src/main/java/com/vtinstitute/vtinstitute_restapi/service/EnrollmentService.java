@@ -98,6 +98,10 @@ public class EnrollmentService {
         return count;
     }
 
+    public List<Enrollment> getEnrollmentsByStudentCours(String idcard, int coursid) {
+        return enrollmentDAO.findByStudentAndCourse(coursid, idcard);
+    }
+
     public Enrollment getLastEnrollmentStudent(String idcard) {
         Enrollment enrollment = enrollmentDAO.getLastStudentEnrollment(idcard)
             .stream()
