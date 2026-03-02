@@ -5,6 +5,4 @@ import com.springcourse.activity.models.entity.Department;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DepartmentDAO extends CrudRepository<Department, Integer>{
-    
-}
+public interface DepartmentDAO extends CrudRepository<Department, Integer>{}
