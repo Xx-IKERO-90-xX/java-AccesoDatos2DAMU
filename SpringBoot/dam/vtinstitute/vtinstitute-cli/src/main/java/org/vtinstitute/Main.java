@@ -133,8 +133,17 @@ public class Main {
                         System.err.println("Course id must be numeric.");
                         return;
                     }
-                    List<Enrollment> enrollments = enrollmentController.getEnrollmentsByStudentCours(idCard, idCourse);
-                    printController.printExpedient(enrollments);
+                    if (args.length > 3) {
+                        List<Enrollment> enrollments = enrollmentController.getEnrollmentsByStudentCours(idCard, idCourse);
+                        switch (args[3]) {
+                            case "--text", "-txt" -> {
+                                printController.printExpedientTXT(idCard, idCourse, enrollments);
+                            }
+                        }
+                    } else {
+                        List<Enrollment> enrollments = enrollmentController.getEnrollmentsByStudentCours(idCard, idCourse);
+                        printController.printExpedient(enrollments);
+                    }
                 } else {
                     System.err.println("Cannot connect to the server!!!");
                 }
