@@ -62,10 +62,6 @@ public class SAXHandler extends DefaultHandler {
             student.setEmail(content);
             bEmail = false;
         }
-        if (bBirthdate) {
-            student.setBirthdate(content);
-            bBirthdate = false;
-        }
     }
 
     @Override

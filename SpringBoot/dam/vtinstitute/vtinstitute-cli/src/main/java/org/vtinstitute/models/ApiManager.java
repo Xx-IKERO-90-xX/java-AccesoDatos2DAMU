@@ -1,5 +1,6 @@
 package org.vtinstitute.models;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -18,32 +19,45 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ApiManager {
 
     private LogsController logsController = new LogsController();
-    private RestApiConnection restApiConnection;
+    private RestApiConnection restApiConnection = new RestApiConnection("http://localhost:8080/", "api/");
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public Student getStudent(String idcard) throws IOException {
         JavaType type = objectMapper.getTypeFactory().constructType(Student.class);
-        HttpResponse response = restApiConnection.getRequest("/students", idcard, null);
+        HttpResponse response = restApiConnection.getRequest("/students", idcard);
         return objectMapper.convertValue(response, type);
     }
 
     public List<Score> getStudentExpedient(String idcard, String cours) throws IOException {
+        String params = "?idcard=" + idcard + "&cours=" + cours;
+
         JavaType type = objectMapper.getTypeFactory()
             .constructCollectionType(List.class, Score.class);
 
-        HttpResponse response = restApiConnection.getRequest("/students/expedient/", idcard, cours);
+        HttpResponse response = restApiConnection.getRequest("/students/expedient/", params);
         Object responseBody = response.getBody(); 
 
         return objectMapper.convertValue(responseBody, type);
     }
 
     public List<Enrollment> getEnrollmentsByStudentCours(String idcard, int cours) throws IOException {
+        String params = "?idcard=" + idcard + "&idcours=" + String.valueOf(cours);  
+
         JavaType type = objectMapper.getTypeFactory()
             .constructCollectionType(List.class, Enrollment.class);
-        
-        HttpResponse response = restApiConnection.getRequest("/enrollments/", idcard, String.valueOf(cours));
-        Object responseBody = response.getBody();
-        return objectMapper.convertValue(responseBody,type);
+
+        HttpResponse response = restApiConnection
+            .getRequest("/enrollments/", params);
+
+        String responseBody = response.getBody().toString();
+
+        System.out.println(response.getStatusCode());
+
+        if (responseBody == null || responseBody.isBlank()) {
+            return Collections.emptyList();
+        }
+
+        return objectMapper.readValue(responseBody, type);
     }
 
     public int addStudentAPI(Student student) throws IOException {
@@ -56,6 +70,8 @@ public class ApiManager {
             logsController.logError(e.getMessage());
         }
         HttpResponse response = restApiConnection.post("/students/add", json);
+        System.out.println(response.getStatusCode());
+        System.out.println(response.getStatusMessage());
         return response.getStatusCode();
     }
 

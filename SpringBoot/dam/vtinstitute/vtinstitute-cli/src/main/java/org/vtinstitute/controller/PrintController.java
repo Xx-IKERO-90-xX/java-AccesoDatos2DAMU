@@ -12,8 +12,8 @@ import org.vtinstitute.models.entity.Score;
 import org.vtinstitute.controller.LogsController;
 
 public class PrintController {
-    private ApiManager apiManager;
-    private LogsController logsController;
+    private ApiManager apiManager = new ApiManager();
+    private LogsController logsController = new LogsController();
 
     public void printExpedient(List<Enrollment> enrollments) throws IOException {
 

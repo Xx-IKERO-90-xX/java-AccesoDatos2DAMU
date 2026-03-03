@@ -30,7 +30,7 @@ public class StudentsController {
     private SAXParser saxParser = null;
     private String xsdPath = "src/main/resources/Students.xsd";
     private LogsController logsController = new LogsController();
-    private ApiManager apiManager;
+    private ApiManager apiManager = new ApiManager();
 
     // Function that creates the SAX parser.
     private SAXParser createSaxParser() {

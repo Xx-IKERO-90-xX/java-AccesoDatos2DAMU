@@ -12,8 +12,8 @@ import org.vtinstitute.models.entity.Enrollment;
 import org.vtinstitute.models.ApiManager;
 
 public class EnrollmentController {
-    private LogsController logsController;
-    private ApiManager apiManager;
+    private LogsController logsController = new LogsController();
+    private ApiManager apiManager = new ApiManager();
 
     public void enrollStudentApi(String idcard, int idcours, int year) throws IOException {
         Map<String, Object> enrollRequest = new HashMap();

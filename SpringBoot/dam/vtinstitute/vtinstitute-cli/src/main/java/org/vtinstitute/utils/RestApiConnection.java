@@ -73,10 +73,7 @@ public class RestApiConnection {
         return response;
     }
 
-    public HttpResponse getRequest(String endPoint, String codeToRetrieve, String secondCode) throws IOException {
-        if (secondCode != null && !secondCode.isEmpty()) {
-            return getRequest(endPoint + "/" + codeToRetrieve + "/" + secondCode);
-        }
+    public HttpResponse getRequest(String endPoint, String codeToRetrieve) throws IOException {
         return getRequest(endPoint + "/" + codeToRetrieve);
     }
 

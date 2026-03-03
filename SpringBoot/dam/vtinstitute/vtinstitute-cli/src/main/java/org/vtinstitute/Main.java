@@ -16,7 +16,7 @@ public class Main {
     private static EnrollmentController enrollmentController = new EnrollmentController();
     private static PrintController printController = new PrintController();
     private static ScoreController scoreController = new ScoreController();
-    private static RestApiConnection restApiConnection;
+    private static RestApiConnection restApiConnection = new RestApiConnection("http://localhost:8080/", "/api");
 
     public static void showDocumentation() {
         System.out.println("""
@@ -114,12 +114,12 @@ public class Main {
                 if (restApiConnection.isServerAvailable()) {
                     if (args.length < 3 ) {
                         System.err.println("There are not enough arguments.");
-                        System.out.println("Usage: --print {studentIdCard} {option}");
+                        System.out.println("Usage: --print {studentIdCard} {coursId} {option}");
                         return;
                     }
                     if (args.length > 4) {
                         System.err.println("Too many arguments.");
-                        System.out.println("Usage: --print {studentIdCard} {option}");
+                        System.out.println("Usage: --print {studentIdCard} {coursId} {option}");
                         return;
                     }
 

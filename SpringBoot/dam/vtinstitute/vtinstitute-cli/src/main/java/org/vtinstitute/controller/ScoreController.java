@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ScoreController {
-    private ApiManager apiManager;
+    private ApiManager apiManager = new ApiManager();
     
     public void qualifyStudent(int enrollmentId, int subjectId, int score) throws IOException {
         Map<String, Object> qualifyRequest = new HashMap();
