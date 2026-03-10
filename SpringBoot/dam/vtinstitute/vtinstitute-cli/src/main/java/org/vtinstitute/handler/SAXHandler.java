@@ -19,11 +19,9 @@ public class SAXHandler extends DefaultHandler {
     private boolean bLastName = false;
     private boolean bPhone = false;
     private boolean bEmail = false;
-    private boolean bBirthdate = false;
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
-
         if ("student".equals(qName)) {
             student = new Student();
             String idCard = atts.getValue("idcard");
@@ -34,7 +32,6 @@ public class SAXHandler extends DefaultHandler {
             case "lastname" -> bLastName = true;
             case "phone" -> bPhone = true;
             case "email" -> bEmail = true;
-            case "birthdate" -> bBirthdate = true;
         }
     }
 

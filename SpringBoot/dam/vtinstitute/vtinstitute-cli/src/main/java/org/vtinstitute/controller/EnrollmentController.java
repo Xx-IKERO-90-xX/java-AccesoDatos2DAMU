@@ -8,6 +8,7 @@ import java.util.Map;
 import org.vtinstitute.controller.*;
 import org.vtinstitute.models.entity.Score;
 import org.vtinstitute.models.entity.Student;
+import org.vtinstitute.models.entity.Cours;
 import org.vtinstitute.models.entity.Enrollment;
 import org.vtinstitute.models.ApiManager;
 
@@ -16,11 +17,13 @@ public class EnrollmentController {
     private ApiManager apiManager = new ApiManager();
 
     public void enrollStudentApi(String idcard, int idcours, int year) throws IOException {
-        Map<String, Object> enrollRequest = new HashMap();
-        enrollRequest.put("idcard", idcard);
-        enrollRequest.put("idcours", idcours);
-        enrollRequest.put("year", year);
-        apiManager.enrollStudentApi(enrollRequest);
+        Student student = apiManager.getStudent(idcard);
+        Cours cours = apiManager.getCours(idcours);
+        Enrollment newEnrollment = new Enrollment();
+        newEnrollment.setStudent(student);
+        newEnrollment.setCourse(cours);
+        newEnrollment.setYear(year);
+        apiManager.enrollStudentApi(newEnrollment);
     }
 
     public List<Enrollment> getEnrollmentsByStudentCours(String idcard, int idcours) throws IOException {

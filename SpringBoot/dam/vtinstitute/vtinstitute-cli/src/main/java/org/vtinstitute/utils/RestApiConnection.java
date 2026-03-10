@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class RestApiConnection {
 
-    protected String server = "http://localhost:8080/";
+    protected String server = "http://localhost:8080";
     protected String apiPath = "/api";
 
     public String getServer() { return server; }

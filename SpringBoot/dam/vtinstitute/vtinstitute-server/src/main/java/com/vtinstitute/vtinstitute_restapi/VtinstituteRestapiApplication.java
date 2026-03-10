@@ -13,5 +13,4 @@ public class VtinstituteRestapiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(VtinstituteRestapiApplication.class, args);
 	}
-
 }

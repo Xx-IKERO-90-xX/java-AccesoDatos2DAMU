@@ -1,23 +1,13 @@
 package org.vtinstitute.models.entity;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity
-@Table(name = "subjects")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Subject {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "subjects_id_gen")
-    @SequenceGenerator(name = "subjects_id_gen", sequenceName = "subjects_code_seq", allocationSize = 1)
-    @Column(name = "code", nullable = false)
     private Integer id;
-
-    @Column(name = "name", length = 50)
     private String name;
-
-    @Column(name = "year")
     private Integer year;
-
-    @Column(name = "hours")
     private Integer hours;
 
     public Integer getId() {

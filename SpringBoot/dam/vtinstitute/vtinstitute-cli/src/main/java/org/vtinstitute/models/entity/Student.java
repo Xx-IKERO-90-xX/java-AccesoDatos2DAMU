@@ -1,27 +1,15 @@
 package org.vtinstitute.models.entity;
 
 import jakarta.persistence.*;
-
 import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity
-@Table(name = "students")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Student {
-    @Id
-    @SequenceGenerator(name = "students_id_gen", sequenceName = "scores_code_seq", allocationSize = 1)
-    @Column(name = "idcard", nullable = false, length = 8)
     private String idcard;
-
-    @Column(name = "firstname", nullable = false, length = 50)
     private String firstname;
-
-    @Column(name = "lastname", nullable = false, length = 100)
     private String lastname;
-
-    @Column(name = "phone", length = 12)
     private String phone;
-
-    @Column(name = "email", length = 100)
     private String email;
 
     public String getIdcard() {

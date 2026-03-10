@@ -59,27 +59,26 @@ public class Main {
                     System.err.println("Cannot connect to the server!!!");
                 }
             }
-
             case "--enroll", "-e" -> {
                 if (restApiConnection.isServerAvailable()) {
-                    if (args.length < 4) {
+                    if (args.length < 4) { 
                         System.err.println("There are not enough arguments.");
                         System.out.println("Usage: --enroll [studentCard] [courseId] [year]");
                         return;
                     }
 
-                    String studentCard = args[1];
+                    String studentCard = args[1]; // Antes era args[2]
                     int courseId = 0;
                     int year = 0;
 
-                    // We validate if courseId and year are numerics.
                     try {
-                        courseId = parseInt(args[2]);
-                        year = parseInt(args[3]);
-                    } catch (Exception e) {
+                        courseId = Integer.parseInt(args[2]); // Antes era args[3]
+                        year = Integer.parseInt(args[3]);     // Antes era args[4]
+                    } catch (NumberFormatException e) {
                         System.err.println("Course id and year must be numeric.");
                         return;
                     }
+                    
                     enrollmentController.enrollStudentApi(studentCard, courseId, year);
                 } else {
                     System.err.println("Cannot connect to the server!!!");
@@ -96,11 +95,12 @@ public class Main {
                         int score = 0;
 
                         try {
-                            enrollment = parseInt(args[2]);
-                            subject = parseInt(args[3]);
-                            score = parseInt(args[4]);
+                            enrollment = parseInt(args[1]);
+                            subject = parseInt(args[2]);
+                            score = parseInt(args[3]);
                         } catch (Exception e){
                             System.err.println("Enrollment id, subject id and score must be numeric.");
+                            e.printStackTrace();
                             return;
                         }
                         scoreController.qualifyStudent(enrollment, subject, score);
@@ -131,6 +131,7 @@ public class Main {
                         idCourse = parseInt(args[2]);
                     } catch (Exception e) {
                         System.err.println("Course id must be numeric.");
+                        e.printStackTrace();
                         return;
                     }
                     if (args.length > 3) {

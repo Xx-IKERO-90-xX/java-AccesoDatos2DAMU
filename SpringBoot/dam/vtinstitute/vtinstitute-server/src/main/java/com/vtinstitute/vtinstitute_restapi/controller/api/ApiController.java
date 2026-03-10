@@ -1,12 +1,14 @@
 package com.vtinstitute.vtinstitute_restapi.controller.api;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vtinstitute.vtinstitute_restapi.model.entity.Student;
+import com.vtinstitute.vtinstitute_restapi.model.entity.Cours;
 import com.vtinstitute.vtinstitute_restapi.model.entity.Enrollment;
 import com.vtinstitute.vtinstitute_restapi.model.entity.Score;
 import com.vtinstitute.vtinstitute_restapi.service.StudentService;
 import com.vtinstitute.vtinstitute_restapi.service.EnrollmentService;
 import com.vtinstitute.vtinstitute_restapi.service.ScoresService;
+import com.vtinstitute.vtinstitute_restapi.service.CoursService;
 
 @RestController
 @RequestMapping("/api")
@@ -33,12 +37,23 @@ public class ApiController {
     @Autowired
     private EnrollmentService enrollmentService;
 
+    @Autowired
+    private CoursService coursService;
+
     @GetMapping("/students/{idcard}")
     public Student findStudentByIdcard(
-        @RequestParam("idcard") String idcard
+        @PathVariable String idcard
     ) {
         Student student = studentService.findById(idcard);
         return student;
+    }
+
+    @GetMapping("/courses/{idcours}")
+    public Cours fincCoursById(
+        @PathVariable int idcours
+    ) {
+        Cours cours = coursService.findById(idcours);
+        return cours;
     }
     
     @PostMapping("/students/add")
@@ -58,31 +73,34 @@ public class ApiController {
         return scores;
     }
 
-
     @PostMapping("/enrollments/enroll")
-    public ResponseEntity<Void> enrollStudent(
-        @RequestParam("idcard") String idCard, 
-        @RequestParam("idcours") int idCours, 
-        @RequestParam("year") int year
-    ) throws Exception { 
-        enrollmentService.enrollStudent(idCard, idCours, year);
+    public ResponseEntity<Void> enrollStudent(@RequestBody Enrollment enrollment) throws Exception { 
+        String idcard = enrollment.getStudent().getIdcard();
+        int cours = enrollment.getCourse().getId();
+        int year = enrollment.getYear();
+        enrollmentService.enrollStudent(idcard, cours, year);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/scores/qualify")
-    public ResponseEntity<Void> qualfyScore(
-        @RequestParam("enrollment") int enrollmentId,
-        @RequestParam("subject") int subjectId,
-        @RequestParam("score") int scoreNum
-    ) throws Exception {
-        Score score = scoreService.getScoreByEnrollmentSubject(enrollmentId, subjectId);
-        score.setScore(scoreNum);
+    public ResponseEntity<Void> qualfyScore(@RequestBody Map<String, Object> payload) throws Exception {
+        int enrollment = (int) payload.get("enrollment");
+        int subject = (int) payload.get("subject");
+        int numScore = (int) payload.get("score");
 
-        Score score1 = scoreService.save(score);
+        Score score = scoreService.getScoreByEnrollmentSubject(enrollment, subject);
+        
+        if (score == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        score.setScore(numScore);
+        scoreService.save(score);
+        
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/enrollments/")
+    @GetMapping({"/enrollments", "/enrollments/"})
     public List<Enrollment> getEnrollmentsByStudentCours(
         @RequestParam("idcard") String idcard,
         @RequestParam("idcours") int idcours

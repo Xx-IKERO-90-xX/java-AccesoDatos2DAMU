@@ -28,8 +28,8 @@ public class PrintController {
             List<Score> scores = apiManager.getStudentExpedient(idCard, cours);
 
             for (Score row : scores) {
-                String subjectName = row.getEnrollment().getCourse().getName();
-                int score = row.getScore();
+                String subjectName = row.getSubject().getName();
+                int score = (row.getScore() != null) ? row.getScore() : 0;
 
                 // Table rows
                 System.out.printf("%-6d %-35s %-5d%n",
@@ -61,7 +61,7 @@ public class PrintController {
 
                 for (Score row : scores) {
                     String subjectName = row.getSubject().getName();
-                    int score = row.getScore();
+                    int score = (row.getScore() != null) ? row.getScore() : 0;
 
                     writer.write(String.format(
                             "%-6d %-35s %-5d%n",

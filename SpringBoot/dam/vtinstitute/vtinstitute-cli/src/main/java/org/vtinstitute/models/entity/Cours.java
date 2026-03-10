@@ -5,16 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.ColumnDefault;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity
-@Table(name = "courses")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Cours {
-    @Id
-    @ColumnDefault("nextval('courses_code_seq')")
-    @Column(name = "code", nullable = false)
     private Integer id;
-
-    @Column(name = "name", nullable = false, length = 90)
     private String name;
 
     public Integer getId() {

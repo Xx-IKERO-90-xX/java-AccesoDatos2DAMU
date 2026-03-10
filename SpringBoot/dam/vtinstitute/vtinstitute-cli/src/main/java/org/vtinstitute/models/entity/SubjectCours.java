@@ -1,22 +1,12 @@
 package org.vtinstitute.models.entity;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity
-@Table(name = "subject_courses")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SubjectCours {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "subject_courses_id_gen")
-    @SequenceGenerator(name = "subject_courses_id_gen", sequenceName = "subject_courses_code_seq", allocationSize = 1)
-    @Column(name = "code", nullable = false)
     private Integer id;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "course_id", nullable = false)
     private Cours course;
 
     public Integer getId() {
@@ -42,5 +32,4 @@ public class SubjectCours {
     public void setCourse(Cours course) {
         this.course = course;
     }
-
 }

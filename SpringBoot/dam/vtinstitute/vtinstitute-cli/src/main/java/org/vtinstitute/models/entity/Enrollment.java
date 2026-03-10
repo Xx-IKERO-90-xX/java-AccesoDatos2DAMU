@@ -2,24 +2,14 @@ package org.vtinstitute.models.entity;
 
 import jakarta.persistence.*;
 
-@Entity
-@Table(name = "enrollments")
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Enrollment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "enrollments_id_gen")
-    @SequenceGenerator(name = "enrollments_id_gen", sequenceName = "inscriptions_code_seq", allocationSize = 1)
-    @Column(name = "code", nullable = false)
     private Integer id;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "student", nullable = false)
     private Student student;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "course", nullable = false)
     private Cours course;
-
-    @Column(name = "year", nullable = false)
     private Integer year;
 
     public Integer getId() {
