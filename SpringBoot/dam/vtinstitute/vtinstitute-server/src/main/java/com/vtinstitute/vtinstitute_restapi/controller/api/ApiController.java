@@ -100,6 +100,25 @@ public class ApiController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/auth/register")
+    public ResponseEntity<Void> registerStudent(@RequestBody Map<String, Object> payload) throws Exception {
+        String idcard = (String) payload.get("idcard");
+        String email = (String) payload.get("email");
+
+        if (studentService.findById(idcard) == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        if (studentService.emailInUse(email)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Student student = studentService.findById(idcard);
+        studentService.registerUser(student, idcard, email);
+
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping({"/enrollments", "/enrollments/"})
     public List<Enrollment> getEnrollmentsByStudentCours(
         @RequestParam("idcard") String idcard,

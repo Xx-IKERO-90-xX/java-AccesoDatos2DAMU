@@ -69,4 +69,21 @@ public class StudentService {
         
         return student;
     }
+
+    public boolean emailInUse(String email) {
+        Student student = studentDAO.getStudentByEmail(email)
+                .stream()
+                .findFirst()
+                .orElse(null);
+
+        if (student == null) {
+            return false;
+        }
+        return true;
+    }
+
+    public void registerUser(Student student, String idcard, String email) {
+        student.setEmail(email);
+        update(idcard, student);
+    }
 }

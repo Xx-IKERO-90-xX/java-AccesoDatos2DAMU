@@ -9,7 +9,6 @@ import jakarta.persistence.Entity;
 @SpringBootApplication
 @EntityScan(basePackages = "com.vtinstitute.vtinstitute_restapi.model.entity")
 public class VtinstituteRestapiApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(VtinstituteRestapiApplication.class, args);
 	}
