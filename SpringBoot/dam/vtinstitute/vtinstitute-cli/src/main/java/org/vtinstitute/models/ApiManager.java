@@ -118,4 +118,16 @@ public class ApiManager {
             System.err.println("Detalle: " + httpResponse.getBody());
         }
     }
+
+    public void registerStudent(Map<String, Object> registerRequest) throws IOException {
+        String jsonPayload = objectMapper.writeValueAsString(registerRequest);
+        HttpResponse httpResponse = restApiConnection.post("auth/register", jsonPayload);
+
+        if (httpResponse.getStatusCode() == 200) {
+            System.out.println("✅ Student registered successfully");
+        } else {
+            System.err.println("❌ Error: " + httpResponse.getStatusCode());
+            System.err.println("Detalle: " + httpResponse.getBody());
+        }
+    }
 }

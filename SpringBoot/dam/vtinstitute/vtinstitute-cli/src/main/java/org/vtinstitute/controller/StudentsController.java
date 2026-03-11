@@ -24,7 +24,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StudentsController {
     private SAXParser saxParser = null;
@@ -119,5 +121,13 @@ public class StudentsController {
             }
         }
         System.out.println("\nStudents list size: " + students.size());
+    }
+
+    public void registerStudent(String idcard, String email) throws IOException {
+        Map<String, Object> registerRequest = new HashMap();
+        registerRequest.put("idcard", idcard);
+        registerRequest.put("email", email);
+
+        apiManager.registerStudent(registerRequest);
     }
 }

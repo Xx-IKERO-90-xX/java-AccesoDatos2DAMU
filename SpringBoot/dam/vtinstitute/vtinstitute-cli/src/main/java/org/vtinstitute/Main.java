@@ -32,7 +32,7 @@ public class Main {
             --close -c : Closes actual courses.
                 Options:
                     --force -f: Forces to close actual courses.  
-             
+            --register -r {idcard} {email}: Function that registers a student to a database. 
             =======================
         """);
     }
@@ -145,6 +145,27 @@ public class Main {
                         List<Enrollment> enrollments = enrollmentController.getEnrollmentsByStudentCours(idCard, idCourse);
                         printController.printExpedient(enrollments);
                     }
+                } else {
+                    System.err.println("Cannot connect to the server!!!");
+                }
+            }
+            case "--register", "-r" -> {
+                if (restApiConnection.isServerAvailable()) {
+                    if (args.length > 3) {
+                        System.err.println("Too many arguments!!");
+                        System.err.println("Usage: --register {idcard} {email}");
+                        return;
+                    }
+
+                    if (args.length < 3) {
+                        System.err.println("Not enouth arguments!");
+                        System.err.println("Usage: --register {idcard} {email}");
+                        return;
+                    }
+
+                    String idCard = args[1];
+                    String email = args[2];
+                    studentsController.registerStudent(idCard, email);
                 } else {
                     System.err.println("Cannot connect to the server!!!");
                 }
