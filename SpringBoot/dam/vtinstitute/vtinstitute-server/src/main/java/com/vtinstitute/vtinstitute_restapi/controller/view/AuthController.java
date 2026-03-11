@@ -39,6 +39,29 @@ public class AuthController {
        return "/auth/index"; 
     }
 
+    @GetMapping("/register")
+    public String getRegister() {return "/auth/register";}
+
+    @PostMapping("/register")
+    public String postRegister(
+        @RequestParam String idcard,
+        @RequestParam String email,
+        RedirectAttributes redirectAttributes
+    ) {
+        Student student = studentService.findById(idcard);
+        if (student == null) {
+            redirectAttributes.addFlashAttribute("error", "El alumno " + idcard + " no existe.");
+            return "redirect:/auth/register";
+        }
+        if (studentService.emailInUse(email)) {
+            redirectAttributes.addFlashAttribute("error", "El correo " + email + " ya está en uso.");
+            return "redirect:/auth/register";
+        }
+        studentService.registerUser(student, idcard, email);
+        redirectAttributes.addFlashAttribute("success", "El alumno " + idcard + " se ha registrado correctamente.");
+        return "redirect:/auth/login";
+    }
+
     @PostMapping("/login")
     public String postLogin(
             @RequestParam String username,
@@ -65,7 +88,6 @@ public class AuthController {
             );
 
             session.setAttribute("rol", "ADMIN");
-
             return "redirect:/";
         }
 

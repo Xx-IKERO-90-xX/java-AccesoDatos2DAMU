@@ -5,26 +5,25 @@
   layout:decorate="~{layout}"
 >
   <head>
-    <title>Login</title>
+    <title>Register</title>
   </head>
   <body>
     <section layout:fragment="content">
         <form
-            th:action="@{/auth/login}"
+            th:action="@{/auth/register}"
             method="post"
             class="fieldset mx-auto mt-50 shadow bg-base-200 border-base-300 rounded-box w-xs border p-4"
         >
+            <br>
+            <h1 class="text-center">Nuevo Estudiante</h1>
+            <br>
+            <label class="label">Codigo</label>
+            <input type="text" class="input" name="idcard" placeholder="Username" required />
 
-            <label class="label">Username</label>
-            <input type="text" class="input" name="username" placeholder="Username" />
-
-            <label class="label">Password</label>
-            <input type="password" class="input" name="passwd" placeholder="Password" />
+            <label class="label">Correo Electrónico</label>
+            <input type="text" class="input" name="email" placeholder="Password" required />
 
             <button type="submit" class="btn btn-success mt-4">Login</button>
-            <br>
-            <a class="link link-info" th:href="@{/auth/register}">Click here to register</a>
-            <br>
         </form>
     </section>
   </body>
