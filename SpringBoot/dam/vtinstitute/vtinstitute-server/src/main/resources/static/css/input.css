@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+/* Aquí es donde configuras qué archivos escanear en v4 */
+@source "../../templates/**/*.html";
+@source "../js/**/*.js";
